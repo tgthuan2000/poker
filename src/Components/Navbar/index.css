@@ -1,0 +1,32 @@
+.navbar{
+    position: fixed;
+    background-color: var(--primary-color);
+    top: 0;
+    bottom: 0;
+    left: calc(50% - var(--srceen-width)/2);
+    width: var(--navbar-width);
+    padding: 0 calc( ( var(--navbar-width) - var(--btnIcon-size) ) / 2);
+    transition: width .3s ease;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+.show{
+    width: var(--navbar-openSize);
+}
+
+.navbar.show + #wrapper{
+    margin-left: var(--navbar-openSize);
+}
+
+.navbar.show .span{
+    display: block;
+}
+
+.navbar.show .btnIcon{
+    justify-content: start;
+    padding-left: 20%;
+}

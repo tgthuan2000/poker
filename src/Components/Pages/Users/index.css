@@ -1,0 +1,13 @@
+.user-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 50px;
+    padding: 0 10px;
+}
+
+.user-list{
+    margin-top: 10px;
+}
+

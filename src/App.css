@@ -1,5 +1,5 @@
 :root{
-  --srceen-width: 414px;
+  --screen-width: 100%;
   --navbar-width: 70px;
   --primary-color: rgb(133, 4, 126);
   --secondary-color: #fff;
@@ -20,7 +20,7 @@ html{
 .App{
   background-color: var(--background-color);
   margin: auto;
-  width: var(--srceen-width);
+  width: var(--screen-width);
   height: 100vh;
   border: 1px solid #ccc;
   overflow-y: scroll;
@@ -33,5 +33,5 @@ html{
   margin-left: var(--navbar-width);
   padding: 12px;
   transition: all .3s ease;
-  width: calc(var(--srceen-width) - var(--navbar-width));
+  width: calc(var(--screen-width) - var(--navbar-width));
 }

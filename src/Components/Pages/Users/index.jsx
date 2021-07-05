@@ -12,8 +12,9 @@ export default function Users() {
     const [showRenameModal,setShowRenameModal] = useState(false)
     const [acceptRename,setAcceptRename] = useState(false)
     const [showDeleteModal,setShowDeleteModal] = useState(false)
-    const inputValue = useRef(null)
+    const inputValue = useRef()
     const renameInputValue = useRef()
+    const [showAddMemberBtn,setShowAddMemberBtn] = useState(false)
 
     // Nhận dữ liệu từ localStorage và truyền vào state
     const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
@@ -46,15 +47,27 @@ export default function Users() {
     // Feature tìm kiếm, lọc member
     const handleKeyup = () => {
         if(inputValue.current.value){
+            // tìm kiếm, lọc member
             setTempList(memberList.filter(item =>
                 item.name.toLowerCase().search(inputValue.current.value.toLowerCase().trim()) !== -1
             ))
+            // show btn Add
+            const check = memberList.find(item => 
+                item.name.toLowerCase() === inputValue.current.value.toLowerCase().trim()
+            )
+            if(check !== undefined)
+                setShowAddMemberBtn(false)
+            else if(inputValue.current.value.trim() === '')
+                setShowAddMemberBtn(false)
+            else
+                setShowAddMemberBtn(true)
         }
         else setTempList(memberList)
     };
 
     // Feature thêm member
     const handleClickAddMember = () => {
+        setShowAddMemberBtn(false)
         setCheck(false)
         const data = [
             {
@@ -117,7 +130,7 @@ export default function Users() {
                             autoFocus
                         />
                         {/* Kiểm tra input value có hợp lệ ?  */}
-                        { (members.length === 0 && inputValue.current && inputValue.current.value.trim() !== '') ?
+                        { showAddMemberBtn ?
                             <Button
                                 className="user-header-item"
                                 active

@@ -25,3 +25,19 @@
 .user-list{
     margin-top: 10px;
 }
+
+.modal-delete-message {
+    font-weight: 300;
+    font-size: 14px;
+    display: flex;
+}
+
+.modal-delete-message > b{
+    font-weight: 500;
+    padding: 0 5px;
+    max-width: 120px;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

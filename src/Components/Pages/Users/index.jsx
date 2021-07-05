@@ -7,17 +7,13 @@ import { Modal, ModalInput, ModalList, ModalListItem } from '../../Modal'
 
 export default function Users() {
     // Khai báo state, ref, ...
-    const [acceptRename,setAcceptRename] = useState(false)
-    const renameInputValue = useRef()
-    const [showRenameModal,setShowRenameModal] = useState(false)
-    const [showModalOption, setShowModalOption] = useState(
-        {
-            status: false,
-            index: null
-        }
-    )
-    const inputValue = useRef()
     const [check,setCheck] = useState(false);
+    const [showModalOption, setShowModalOption] = useState({ status: false, index: null })
+    const [showRenameModal,setShowRenameModal] = useState(false)
+    const [acceptRename,setAcceptRename] = useState(false)
+    const [showDeleteModal,setShowDeleteModal] = useState(false)
+    const inputValue = useRef()
+    const renameInputValue = useRef()
 
     // Nhận dữ liệu từ localStorage và truyền vào state
     const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
@@ -70,7 +66,6 @@ export default function Users() {
         setTempList(data)
     };
 
-
     // Check name
     const handleKeyUpRename = () => {
         const check = memberList.find(item => 
@@ -92,8 +87,19 @@ export default function Users() {
             if(index === showModalOption.index) item.name = renameInputValue.current.value.trim()
         })
         setMemberList(newList)
+        setTempList(newList)
         setShowModalOption({ status: false, index: null })
         setAcceptRename(false)
+    }
+
+    // Feature submit modal delete
+    const handleSubmitDeleteModal = () => {
+        setShowDeleteModal(false)
+        const newList = [...memberList]
+        newList.splice(showModalOption.index,1)
+        setMemberList(newList)
+        setTempList(newList)
+        setShowModalOption({ status: false, index: null })
     }
     return (
         <>
@@ -121,7 +127,7 @@ export default function Users() {
                             :
                             <Button
                                 className="user-header-item"
-                                onClick={() => setCheck(false)}
+                                onClick={() => {setCheck(false); setTempList(memberList)}}
                             >
                                 Back
                             </Button>
@@ -154,8 +160,8 @@ export default function Users() {
                             icon='fas fa-signature'
                             onClick={() =>
                                 {
+                                    setShowModalOption({status: false, index: showModalOption.index});
                                     setShowRenameModal(true);
-                                    setShowModalOption({status: false, index: showModalOption.index})
                                 }
                             }
                         > Rename </ModalListItem>
@@ -165,7 +171,12 @@ export default function Users() {
                         > Add group </ModalListItem>
                         <ModalListItem
                             icon='fas fa-trash-alt'
-                            // onClick={}
+                            onClick={() =>
+                                {
+                                    setShowModalOption({status: false, index: showModalOption.index});
+                                    setShowDeleteModal(true)
+                                }
+                            }
                         > Delete </ModalListItem>
                     </ModalList>
                 </Modal>
@@ -177,7 +188,8 @@ export default function Users() {
                     cancleModal={() =>
                         {
                             setShowRenameModal(false);
-                            setShowModalOption({status:true, index: showModalOption.index})
+                            setShowModalOption({status:true, index: showModalOption.index});
+                            setAcceptRename(false)
                         }
                     }
                     submitModal={handleSubmitRenameModal}
@@ -199,6 +211,24 @@ export default function Users() {
             {/* Hiển thị modal add group */}
             
             {/* Hiển thị modal delete */}
+            {showDeleteModal && 
+                <Modal
+                    cancleModal={() =>
+                        {
+                            setShowDeleteModal(false);
+                            setShowModalOption({status:true, index: showModalOption.index})
+                        }
+                    }
+                    submitModal={handleSubmitDeleteModal}
+                    header='Delete member'
+                    cancleText='Cancle'
+                    acceptText='Yes, I do!'
+                >
+                    <span className='modal-delete-message'>
+                        Do you want delete <b>{memberList[showModalOption.index].name}</b> ?
+                    </span>
+                </Modal>
+            }
         </>
     )
 }

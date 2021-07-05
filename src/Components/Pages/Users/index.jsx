@@ -48,12 +48,14 @@ export default function Users() {
                     {check ?
                     <>
                         <Input
+                            className="user-header-item"
                             placeholder='New name member'
                             handleKeyup={handleKeyup}
                             useRef={inputValue}
                         />
                         { (members.length === 0 && inputValue !== '') ?
                             <Button
+                                className="user-header-item"
                                 active
                                 onClick={handleClickAddMember}
                             >
@@ -61,6 +63,7 @@ export default function Users() {
                             </Button>
                             :
                             <Button
+                                className="user-header-item"
                                 onClick={() => setCheck(!check)}
                             >
                                 Back

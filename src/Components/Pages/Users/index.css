@@ -3,11 +3,14 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    height: 50px;
     padding: 0 10px;
+    margin-bottom: 20px;
 }
 
 .user-list{
     margin-top: 10px;
 }
 
+.user-header-item{
+    margin-top: 10px;
+}

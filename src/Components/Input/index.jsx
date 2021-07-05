@@ -1,9 +1,9 @@
 import React from 'react'
 import './index.css'
 
-function Input({ placeholder, onKeyUp, useRef, className, autoFocus }) {
+function Input({ placeholder, onInput, useRef, className, autoFocus }) {
     return (
-        <input className={`input${className ? ' '+className : ''}`} ref={useRef} autoFocus={autoFocus} onKeyUp={onKeyUp} placeholder={placeholder ? placeholder : ''}/>
+        <input className={`input${className ? ' '+className : ''}`} ref={useRef} autoFocus={autoFocus} onInput={onInput} placeholder={placeholder ? placeholder : ''}/>
     )
 }
 

@@ -4,6 +4,7 @@ import Member from '../../Member/index.jsx'
 import { Button } from '../../Button'
 import { Input } from '../../Input'
 import { Modal, ModalInput, ModalList, ModalListItem } from '../../Modal'
+import { filter, search } from '../../../Features/feature'
 
 export default function Users() {
     // Khai báo state, ref, ...
@@ -45,26 +46,15 @@ export default function Users() {
     }
 
     // Feature tìm kiếm, lọc member
-    const handleKeyup = () => {
-        if(inputValue.current.value){
-            // tìm kiếm, lọc member
-            setTempList(memberList.filter(item =>
-                item.name.toLowerCase().search(inputValue.current.value.toLowerCase().trim()) !== -1
-            ))
-            // show btn Add
-            const check = memberList.find(item => 
-                item.name.toLowerCase() === inputValue.current.value.toLowerCase().trim()
-            )
-            if(check !== undefined)
-                setShowAddMemberBtn(false)
-            else if(inputValue.current.value.trim() === '')
-                setShowAddMemberBtn(false)
-            else
-                setShowAddMemberBtn(true)
+    const handleOnInput = () => {
+        // tìm kiếm, lọc member
+        setTempList(filter(memberList, inputValue, 'name'))
+        if(!inputValue.current.value){
+            setTempList(memberList)
         }
-        else setTempList(memberList)
+        // show btn Add
+        setShowAddMemberBtn(search(memberList, inputValue, 'name'))
     };
-
     // Feature thêm member
     const handleClickAddMember = () => {
         setShowAddMemberBtn(false)
@@ -78,19 +68,6 @@ export default function Users() {
         setMemberList(data)
         setTempList(data)
     };
-
-    // Check name
-    const handleKeyUpRename = () => {
-        const check = memberList.find(item => 
-            item.name.toLowerCase() === renameInputValue.current.value.toLowerCase().trim()
-        )
-        if(check !== undefined)
-            setAcceptRename(false)
-        else if(renameInputValue.current.value.trim() === '')
-            setAcceptRename(false)
-        else
-            setAcceptRename(true)
-    }
 
     // Feature submit modal rename
     const handleSubmitRenameModal = () => {
@@ -125,7 +102,7 @@ export default function Users() {
                         <Input
                             className="user-header-item user-header-input"
                             placeholder='Enter a new member name'
-                            onKeyUp={handleKeyup}
+                            onInput={handleOnInput}
                             useRef={inputValue}
                             autoFocus
                         />
@@ -216,7 +193,7 @@ export default function Users() {
                             placeholder='Enter a new name'
                             useRef={renameInputValue}
                             autoFocus
-                            onKeyUp={handleKeyUpRename}
+                            onInput={() => setAcceptRename(search(memberList, renameInputValue, 'name'))}
                         />
                     </ModalInput>
                 </Modal>

@@ -72,6 +72,7 @@ export default function Users() {
                     </>
                     :
                     <Button
+                        className="user-header-item"
                         onClick={() => setCheck(!check)}
                         icon='fas fa-plus'
                     >

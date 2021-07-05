@@ -12,7 +12,7 @@ export default function Users() {
     const [showRenameModal,setShowRenameModal] = useState(false)
     const [acceptRename,setAcceptRename] = useState(false)
     const [showDeleteModal,setShowDeleteModal] = useState(false)
-    const inputValue = useRef()
+    const inputValue = useRef(null)
     const renameInputValue = useRef()
 
     // Nhận dữ liệu từ localStorage và truyền vào state
@@ -100,6 +100,7 @@ export default function Users() {
         setMemberList(newList)
         setTempList(newList)
         setShowModalOption({ status: false, index: null })
+        if(newList.length === 0) inputValue.current = null
     }
     return (
         <>
@@ -116,7 +117,7 @@ export default function Users() {
                             autoFocus
                         />
                         {/* Kiểm tra input value có hợp lệ ?  */}
-                        { (members.length === 0 && inputValue !== '') ?
+                        { (members.length === 0 && inputValue.current && inputValue.current.value.trim() !== '') ?
                             <Button
                                 className="user-header-item"
                                 active

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button } from '../Button'
-import { Input } from '../Input'
 import './index.css'
 
 const Modal = ({ children, header, acceptText, cancleText, btnClose = true, cancleModal, submitModal }) => {

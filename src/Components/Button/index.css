@@ -32,6 +32,27 @@
     background-color: var(--secondary-color);
 }
 
+.btnWrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+    font-weight: 600;
+}
+
+.btnWrap span{
+    font-size: 20px;
+    max-width: 150px;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.btnWrap i {
+    font-size: 16px;
+}
+
 .btnText{
     padding: 6px 10px;
     color: var(--primary-color);
@@ -62,5 +83,4 @@
 .bugger{
     border-bottom: 1px solid var(--secondary-color);
     border-radius: 0;
-    padding: 0 16px;
 }

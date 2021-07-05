@@ -7,6 +7,7 @@ import { Modal, ModalInput, ModalList, ModalListItem } from '../../Modal'
 
 export default function Users() {
     // Khai báo state, ref, ...
+    const [acceptRename,setAcceptRename] = useState(false)
     const renameInputValue = useRef()
     const [showRenameModal,setShowRenameModal] = useState(false)
     const [showModalOption, setShowModalOption] = useState(
@@ -58,10 +59,10 @@ export default function Users() {
 
     // Feature thêm member
     const handleClickAddMember = () => {
-        setCheck(!check)
+        setCheck(false)
         const data = [
             {
-                name: inputValue.current.value,
+                name: inputValue.current.value.trim(),
             },
             ...memberList,
         ];
@@ -70,26 +71,40 @@ export default function Users() {
     };
 
 
+    // Check name
+    const handleKeyUpRename = () => {
+        const check = memberList.find(item => 
+            item.name.toLowerCase() === renameInputValue.current.value.toLowerCase().trim()
+        )
+        if(check !== undefined)
+            setAcceptRename(false)
+        else if(renameInputValue.current.value.trim() === '')
+            setAcceptRename(false)
+        else
+            setAcceptRename(true)
+    }
+
     // Feature submit modal rename
     const handleSubmitRenameModal = () => {
         setShowRenameModal(false)
         const newList = [...memberList]
         newList.forEach((item, index) => {
-            if(index === showModalOption.index) item.name = renameInputValue.current.value
+            if(index === showModalOption.index) item.name = renameInputValue.current.value.trim()
         })
         setMemberList(newList)
         setShowModalOption({ status: false, index: null })
+        setAcceptRename(false)
     }
     return (
         <>
             <div className='user'>
-                <div className="user-header">
+                <div className={`user-header ${check ? 'user-header-active' : 'user-header-non-active'}`}>
                     {/* Kiểm tra có hiển thị btn Add Member hay input */}
                     {check ?
                     <>
                         <Input
-                            className="user-header-item"
-                            placeholder='New name member'
+                            className="user-header-item user-header-input"
+                            placeholder='Enter a new member name'
                             onKeyUp={handleKeyup}
                             useRef={inputValue}
                             autoFocus
@@ -167,7 +182,7 @@ export default function Users() {
                     }
                     submitModal={handleSubmitRenameModal}
                     header='Rename'
-                    acceptText='Accept!'
+                    acceptText={acceptRename && 'Accept!'}
                     cancleText='Cancle'
                 >
                     <ModalInput>
@@ -175,6 +190,7 @@ export default function Users() {
                             placeholder='Enter a new name'
                             useRef={renameInputValue}
                             autoFocus
+                            onKeyUp={handleKeyUpRename}
                         />
                     </ModalInput>
                 </Modal>

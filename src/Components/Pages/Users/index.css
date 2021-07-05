@@ -1,14 +1,25 @@
 .user-header{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 0 10px;
     margin-bottom: 20px;
+    padding: 0 10px;
+    align-items: center;
+}
+
+.user-header-active{
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.user-header{
+    justify-content: flex-end;
 }
 
 .user-header-item{
     margin-top: 10px;
+}
+
+.user-header-input{
+    margin-right: 16px;
 }
 
 .user-list{

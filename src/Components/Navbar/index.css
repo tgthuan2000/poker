@@ -30,3 +30,7 @@
     justify-content: start;
     padding-left: 20%;
 }
+
+.navbar.show .btnIcon.bugger{
+    padding-left: 0;
+}

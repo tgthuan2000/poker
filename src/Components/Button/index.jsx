@@ -16,8 +16,10 @@ function Bugger({ active, onClick}) {
         <button className={`btn btnIcon${active ? ' bugger' : ''}`} onClick={onClick}>
             {active ?
             <>
-                <span style={{marginLeft:'-15px', marginRight:'100px',fontSize:'20px',fontWeight:'600'}}> Menu </span>
-                <i className='fas fa-times' />
+                <div className="btnWrap">
+                    <span> React Poker </span>
+                    <i className='fas fa-times' />
+                </div>
             </>
             : <i className='fas fa-bars' />}
         </button>

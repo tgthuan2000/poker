@@ -3,15 +3,8 @@
     margin-bottom: 20px;
     padding: 0 10px;
     align-items: center;
-}
-
-.user-header-active{
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.user-header{
     justify-content: flex-end;
+    flex-wrap: wrap;
 }
 
 .user-header-item{
@@ -30,6 +23,7 @@
     font-weight: 300;
     font-size: 14px;
     display: flex;
+    margin: 10px 0 10px 12px;
 }
 
 .modal-delete-message > b{

@@ -105,7 +105,7 @@ export default function Users() {
     return (
         <>
             <div className='user'>
-                <div className={`user-header ${check ? 'user-header-active' : 'user-header-non-active'}`}>
+                <div className='user-header'>
                     {/* Kiểm tra có hiển thị btn Add Member hay input */}
                     {check ?
                     <>

@@ -6,6 +6,7 @@ import { Input } from '../../Input'
 import { Modal, ModalInput, ModalList, ModalListItem } from '../../Modal'
 
 export default function Users() {
+    // Khai báo state, ref, ...
     const renameInputValue = useRef()
     const [showRenameModal,setShowRenameModal] = useState(false)
     const [showModalOption, setShowModalOption] = useState(
@@ -16,9 +17,17 @@ export default function Users() {
     )
     const inputValue = useRef()
     const [check,setCheck] = useState(false);
+
+    // Nhận dữ liệu từ localStorage và truyền vào state
     const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
+
+    // Cập nhật localStorage khi memberList thay đổi
     useEffect(() => { localStorage.setItem('memberData', JSON.stringify(memberList)) }, [memberList]);
+
+    // Copy memberList để tìm kiếm
     const [tempList,setTempList] = useState(memberList);
+
+    // Duyệt copyList để render view
     const members = tempList.map((item, index) =>
         <Member
             key={index}
@@ -26,6 +35,8 @@ export default function Users() {
             optionHandleClick={() => handleClickOptionMember(index)}
         />
     );
+
+    // Feature click option (dấu 3 chấm) member
     const handleClickOptionMember = (index) => {
         setShowModalOption(
             {
@@ -34,6 +45,8 @@ export default function Users() {
             }
         )
     }
+
+    // Feature tìm kiếm, lọc member
     const handleKeyup = () => {
         if(inputValue.current.value){
             setTempList(memberList.filter(item =>
@@ -42,6 +55,8 @@ export default function Users() {
         }
         else setTempList(memberList)
     };
+
+    // Feature thêm member
     const handleClickAddMember = () => {
         setCheck(!check)
         const data = [
@@ -53,6 +68,9 @@ export default function Users() {
         setMemberList(data)
         setTempList(data)
     };
+
+
+    // Feature submit modal rename
     const handleSubmitRenameModal = () => {
         setShowRenameModal(false)
         const newList = [...memberList]
@@ -66,6 +84,7 @@ export default function Users() {
         <>
             <div className='user'>
                 <div className="user-header">
+                    {/* Kiểm tra có hiển thị btn Add Member hay input */}
                     {check ?
                     <>
                         <Input
@@ -75,6 +94,7 @@ export default function Users() {
                             useRef={inputValue}
                             autoFocus
                         />
+                        {/* Kiểm tra input value có hợp lệ ?  */}
                         { (members.length === 0 && inputValue !== '') ?
                             <Button
                                 className="user-header-item"
@@ -86,7 +106,7 @@ export default function Users() {
                             :
                             <Button
                                 className="user-header-item"
-                                onClick={() => setCheck(!check)}
+                                onClick={() => setCheck(false)}
                             >
                                 Back
                             </Button>
@@ -95,7 +115,7 @@ export default function Users() {
                     :
                     <Button
                         className="user-header-item"
-                        onClick={() => setCheck(!check)}
+                        onClick={() => setCheck(true)}
                         icon='fas fa-plus'
                     >
                         Add Member
@@ -103,9 +123,12 @@ export default function Users() {
                     }
                 </div>
                 <div className="user-list">
+                    {/* Hiển thị memberList */}
                     { members.length > 0 && members }
                 </div>
             </div>
+
+            {/* Hiển thị modal option (3 chấm) */}
             {showModalOption.status &&
                 <Modal 
                     cancleModal={() => setShowModalOption({status: false, index: null})}
@@ -133,6 +156,7 @@ export default function Users() {
                 </Modal>
             }
 
+            {/* Hiển thị modal rename */}
             {showRenameModal && 
                 <Modal 
                     cancleModal={() =>
@@ -155,6 +179,10 @@ export default function Users() {
                     </ModalInput>
                 </Modal>
             }
+
+            {/* Hiển thị modal add group */}
+            
+            {/* Hiển thị modal delete */}
         </>
     )
 }

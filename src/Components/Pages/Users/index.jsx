@@ -3,10 +3,17 @@ import './index.css'
 import Member from '../../Member/index.jsx'
 import { Button } from '../../Button'
 import { Input } from '../../Input'
-import { Modal, ModalList, ModalListItem } from '../../Modal'
+import { Modal, ModalInput, ModalList, ModalListItem } from '../../Modal'
 
 export default function Users() {
-    const [showModalOption, setShowModalOption] = useState(false)
+    const renameInputValue = useRef()
+    const [showRenameModal,setShowRenameModal] = useState(false)
+    const [showModalOption, setShowModalOption] = useState(
+        {
+            status: false,
+            index: null
+        }
+    )
     const inputValue = useRef()
     const [check,setCheck] = useState(false);
     const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
@@ -19,9 +26,14 @@ export default function Users() {
             optionHandleClick={() => handleClickOptionMember(index)}
         />
     );
-    const handleClickOptionMember = (index) => (
-        setShowModalOption(true)
-    )
+    const handleClickOptionMember = (index) => {
+        setShowModalOption(
+            {
+                status: true,
+                index
+            }
+        )
+    }
     const handleKeyup = () => {
         if(inputValue.current.value){
             setTempList(memberList.filter(item =>
@@ -41,6 +53,15 @@ export default function Users() {
         setMemberList(data)
         setTempList(data)
     };
+    const handleSubmitRenameModal = () => {
+        setShowRenameModal(false)
+        const newList = [...memberList]
+        newList.forEach((item, index) => {
+            if(index === showModalOption.index) item.name = renameInputValue.current.value
+        })
+        setMemberList(newList)
+        setShowModalOption({ status: false, index: null })
+    }
     return (
         <>
             <div className='user'>
@@ -50,8 +71,9 @@ export default function Users() {
                         <Input
                             className="user-header-item"
                             placeholder='New name member'
-                            handleKeyup={handleKeyup}
+                            onKeyUp={handleKeyup}
                             useRef={inputValue}
+                            autoFocus
                         />
                         { (members.length === 0 && inputValue !== '') ?
                             <Button
@@ -84,17 +106,53 @@ export default function Users() {
                     { members.length > 0 && members }
                 </div>
             </div>
-            {showModalOption &&
+            {showModalOption.status &&
                 <Modal 
-                    cancleModal={() => setShowModalOption(false)}
-                    header='Tùy chỉnh'
+                    cancleModal={() => setShowModalOption({status: false, index: null})}
+                    header='My option'
                 >
                     <ModalList>
                         <ModalListItem
                             icon='fas fa-signature'
+                            onClick={() =>
+                                {
+                                    setShowRenameModal(true);
+                                    setShowModalOption({status: false, index: showModalOption.index})
+                                }
+                            }
+                        > Rename </ModalListItem>
+                        <ModalListItem
+                            icon='fas fa-users'
                             // onClick={}
-                        > Sửa tên </ModalListItem>
+                        > Add group </ModalListItem>
+                        <ModalListItem
+                            icon='fas fa-trash-alt'
+                            // onClick={}
+                        > Delete </ModalListItem>
                     </ModalList>
+                </Modal>
+            }
+
+            {showRenameModal && 
+                <Modal 
+                    cancleModal={() =>
+                        {
+                            setShowRenameModal(false);
+                            setShowModalOption({status:true, index: showModalOption.index})
+                        }
+                    }
+                    submitModal={handleSubmitRenameModal}
+                    header='Rename'
+                    acceptText='Accept!'
+                    cancleText='Cancle'
+                >
+                    <ModalInput>
+                        <Input
+                            placeholder='Enter a new name'
+                            useRef={renameInputValue}
+                            autoFocus
+                        />
+                    </ModalInput>
                 </Modal>
             }
         </>

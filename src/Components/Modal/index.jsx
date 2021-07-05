@@ -1,8 +1,9 @@
 import React from 'react'
 import { Button } from '../Button'
+import { Input } from '../Input'
 import './index.css'
 
-const Modal = ({ children, header, acceptText, cancleText, btnClose = true, cancleModal }) => {
+const Modal = ({ children, header, acceptText, cancleText, btnClose = true, cancleModal, submitModal }) => {
     return (
         <>
             <div className='modal'>
@@ -30,6 +31,7 @@ const Modal = ({ children, header, acceptText, cancleText, btnClose = true, canc
                         <Button
                             active
                             className='btnAccept'
+                            onClick={submitModal}
                         >{acceptText}</Button>
                     }
 
@@ -49,4 +51,11 @@ const ModalListItem = ({icon, title, children, onClick}) => (
     </li>
 )
 
-export { Modal, ModalList, ModalListItem }
+
+const ModalInput = ({children, onClick}) => (
+    <div className="modal-input" onClick={onClick}>
+        {children}
+    </div>
+)
+
+export { Modal, ModalList, ModalListItem, ModalInput }

@@ -1,9 +1,9 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Home from './Components/Pages/Home'
 import Navbar from './Components/Navbar'
-import Games from './Components/Pages/Games';
-import Users from './Components/Pages/Users';
+import Home from './Pages/Home'
+import Games from './Pages/Games';
+import Users from './Pages/Users';
 
 
 function App() {

@@ -1,21 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './index.css'
-import Member from '../../Member/index.jsx'
-import { Button } from '../../Button'
-import { Input } from '../../Input'
-import { Modal, ModalInput, ModalList, ModalListItem } from '../../Modal'
-import { filter, search } from '../../../Features/feature'
+import Member from '../../Components/Member/index.jsx'
+import { Button } from '../../Components/Button'
+import { Input } from '../../Components/Input'
+import { Modal, ModalInput, ModalList, ModalListItem } from '../../Components/Modal'
+import { filter, search, randomString} from '../../Features/feature'
 
 export default function Users() {
     // Khai báo state, ref, ...
     const [check,setCheck] = useState(false);
-    const [showModalOption, setShowModalOption] = useState({ status: false, index: null })
+    const [showAddMemberBtn,setShowAddMemberBtn] = useState(false)
+    const [showModalOption, setShowModalOption] = useState({ status: false, id: null })
     const [showRenameModal,setShowRenameModal] = useState(false)
     const [acceptRename,setAcceptRename] = useState(false)
     const [showDeleteModal,setShowDeleteModal] = useState(false)
     const inputValue = useRef()
     const renameInputValue = useRef()
-    const [showAddMemberBtn,setShowAddMemberBtn] = useState(false)
+    // Refresh state, ref, ...
+    const refreshState = () => {
+        setCheck(false)
+        setShowAddMemberBtn(false)
+        setShowModalOption({ status: false, id: null })
+        setShowRenameModal(false)
+        setAcceptRename(false)
+        setShowDeleteModal(false)
+        inputValue.current = null
+        renameInputValue.current = null
+    }
 
     // Nhận dữ liệu từ localStorage và truyền vào state
     const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
@@ -31,19 +42,9 @@ export default function Users() {
         <Member
             key={index}
             name={item.name}
-            optionHandleClick={() => handleClickOptionMember(index)}
+            optionHandleClick={() => setShowModalOption({ status: true, id: item.id })}
         />
     );
-
-    // Feature click option (dấu 3 chấm) member
-    const handleClickOptionMember = (index) => {
-        setShowModalOption(
-            {
-                status: true,
-                index
-            }
-        )
-    }
 
     // Feature tìm kiếm, lọc member
     const handleOnInput = () => {
@@ -55,42 +56,47 @@ export default function Users() {
         // show btn Add
         setShowAddMemberBtn(search(memberList, inputValue, 'name'))
     };
+
     // Feature thêm member
     const handleClickAddMember = () => {
-        setShowAddMemberBtn(false)
-        setCheck(false)
         const data = [
             {
+                id: randomString(), // random id, default 5 chars
                 name: inputValue.current.value.trim(),
             },
             ...memberList,
         ];
         setMemberList(data)
         setTempList(data)
+
+        refreshState()
     };
 
     // Feature submit modal rename
     const handleSubmitRenameModal = () => {
-        setShowRenameModal(false)
         const newList = [...memberList]
-        newList.forEach((item, index) => {
-            if(index === showModalOption.index) item.name = renameInputValue.current.value.trim()
+        newList.forEach(item => {
+            if(item.id === showModalOption.id) item.name = renameInputValue.current.value.trim()
         })
+
         setMemberList(newList)
         setTempList(newList)
-        setShowModalOption({ status: false, index: null })
-        setAcceptRename(false)
+
+        refreshState()
     }
 
     // Feature submit modal delete
     const handleSubmitDeleteModal = () => {
-        setShowDeleteModal(false)
         const newList = [...memberList]
-        newList.splice(showModalOption.index,1)
+        newList.splice(
+            newList.findIndex(item => item.id === showModalOption.id),
+            1
+        )
+
         setMemberList(newList)
         setTempList(newList)
-        setShowModalOption({ status: false, index: null })
-        if(newList.length === 0) inputValue.current = null
+
+        refreshState()
     }
     return (
         <>
@@ -143,28 +149,31 @@ export default function Users() {
             {/* Hiển thị modal option (3 chấm) */}
             {showModalOption.status &&
                 <Modal 
-                    cancleModal={() => setShowModalOption({status: false, index: null})}
+                    cancleModal={() => setShowModalOption({status: false, id: null})}
                     header='My option'
                 >
                     <ModalList>
                         <ModalListItem
+                            colorIcon='red'
                             icon='fas fa-signature'
                             onClick={() =>
                                 {
-                                    setShowModalOption({status: false, index: showModalOption.index});
+                                    setShowModalOption({status: false, id: showModalOption.id});
                                     setShowRenameModal(true);
                                 }
                             }
                         > Rename </ModalListItem>
                         <ModalListItem
+                            colorIcon='green'
                             icon='fas fa-users'
                             // onClick={}
                         > Add group </ModalListItem>
                         <ModalListItem
+                            colorIcon='blue'
                             icon='fas fa-trash-alt'
                             onClick={() =>
                                 {
-                                    setShowModalOption({status: false, index: showModalOption.index});
+                                    setShowModalOption({status: false, id: showModalOption.id});
                                     setShowDeleteModal(true)
                                 }
                             }
@@ -179,7 +188,7 @@ export default function Users() {
                     cancleModal={() =>
                         {
                             setShowRenameModal(false);
-                            setShowModalOption({status:true, index: showModalOption.index});
+                            setShowModalOption({status:true, id:showModalOption.id});
                             setAcceptRename(false)
                         }
                     }
@@ -207,7 +216,7 @@ export default function Users() {
                     cancleModal={() =>
                         {
                             setShowDeleteModal(false);
-                            setShowModalOption({status:true, index: showModalOption.index})
+                            setShowModalOption({status:true, id:showModalOption.id})
                         }
                     }
                     submitModal={handleSubmitDeleteModal}
@@ -216,7 +225,7 @@ export default function Users() {
                     acceptText='Yes, I do!'
                 >
                     <span className='modal-delete-message'>
-                        Do you want delete <b>{memberList[showModalOption.index].name}</b> ?
+                        Do you want delete <b>{memberList.find(item => item.id === showModalOption.id).name}</b> ?
                     </span>
                 </Modal>
             }

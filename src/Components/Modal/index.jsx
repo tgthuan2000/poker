@@ -43,9 +43,9 @@ const Modal = ({ children, header, acceptText, cancleText, btnClose = true, canc
 
 const ModalList = ({children}) => <ul className="modal-list">{children}</ul>
 
-const ModalListItem = ({icon, title, children, onClick}) => (
+const ModalListItem = ({icon, title, children, onClick, colorIcon}) => (
     <li className="modal-list-item" onClick={onClick} >
-        <i className={`${icon} modal-item-icon`} />
+        <i className={`${icon} modal-item-icon`} style={{ color:colorIcon }} />
         <span className="modal-item-title">{children || title}</span>
     </li>
 )

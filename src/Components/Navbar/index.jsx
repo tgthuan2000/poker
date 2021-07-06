@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './index.css'
-import { NavLink, Bugger } from '../Button/index.jsx'
-import NavbarMenu from '../../Data/NavbarMenu.jsx'
+import { NavLink, Bugger } from '../Button'
+import { NavbarMenu } from '../../Data'
 
 export default function Navbar() {
     const [listMenu,setListMenu] = useState(NavbarMenu)

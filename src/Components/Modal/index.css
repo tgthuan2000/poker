@@ -75,8 +75,9 @@
 .modal-list{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     list-style: none;
+    margin-bottom: -20px;
 }
 
 .modal-list-item{
@@ -85,11 +86,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 70px;
     border-radius: var(--border-radius);
     color: #555;
-    /* border: 1px solid #555; */
-    margin-bottom: 15px;
+    border: 1px solid #555;
+    padding: 7px 0;
+    margin-bottom: 20px;
     cursor: pointer;
 }
 /* 
@@ -104,7 +105,7 @@
 }
 
 .modal-item-title{
-    max-width: 70px;
+    max-width: 75px;
     font-size: 14px;
     margin-top: 5px;
     overflow: hidden;

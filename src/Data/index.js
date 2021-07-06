@@ -10,7 +10,7 @@ const NavbarMenu =
         {
             id: 2,
             name: 'Member',
-            icon: 'fas fa-user',
+            icon: 'fas fa-users',
             path: '/users',
             active: false,
         },
@@ -22,4 +22,13 @@ const NavbarMenu =
             active: false,
         },
     ]
-export default NavbarMenu
+
+const gameData = 
+    [
+        {
+            id: 1,
+            name: 'Poker',
+            iconImage: 'poker-cards.png',
+        },
+    ]
+export { NavbarMenu, gameData }

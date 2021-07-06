@@ -154,7 +154,7 @@ export default function Users() {
                 >
                     <ModalList>
                         <ModalListItem
-                            colorIcon='red'
+                            colorIcon='blue'
                             icon='fas fa-signature'
                             onClick={() =>
                                 {
@@ -167,9 +167,9 @@ export default function Users() {
                             colorIcon='green'
                             icon='fas fa-users'
                             // onClick={}
-                        > Add group </ModalListItem>
+                        > Add games </ModalListItem>
                         <ModalListItem
-                            colorIcon='blue'
+                            colorIcon='red'
                             icon='fas fa-trash-alt'
                             onClick={() =>
                                 {

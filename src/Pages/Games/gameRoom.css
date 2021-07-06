@@ -1,0 +1,21 @@
+.game-room-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 10px;
+    margin-bottom: 20px;
+}
+
+.game-name{
+    margin-top: 10px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
+.game-add-room{
+    margin-top: 10px;
+    font-weight: 600;
+}

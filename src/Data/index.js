@@ -26,7 +26,7 @@ const NavbarMenu =
 const gameData = 
     [
         {
-            id: 1,
+            id: 'poker',
             name: 'Poker',
             iconImage: 'poker-cards.png',
         },

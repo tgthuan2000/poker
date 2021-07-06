@@ -16,8 +16,18 @@ export default function Users() {
     const [showDeleteModal,setShowDeleteModal] = useState(false)
     const inputValue = useRef()
     const renameInputValue = useRef()
-    // Refresh state, ref, ...
-    const refreshState = () => {
+
+    // Nhận dữ liệu từ localStorage và truyền vào state
+    const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
+
+    // Copy memberList để tìm kiếm
+    const [tempList,setTempList] = useState(memberList);
+
+    // Cập nhật khi memberList thay đổi
+    useEffect(() => {
+        localStorage.setItem('memberData', JSON.stringify(memberList))
+        setTempList(memberList)
+        // refresh all sate
         setCheck(false)
         setShowAddMemberBtn(false)
         setShowModalOption({ status: false, id: null })
@@ -26,23 +36,15 @@ export default function Users() {
         setShowDeleteModal(false)
         inputValue.current = null
         renameInputValue.current = null
-    }
+    }, [memberList]);
 
-    // Nhận dữ liệu từ localStorage và truyền vào state
-    const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
-
-    // Cập nhật localStorage khi memberList thay đổi
-    useEffect(() => { localStorage.setItem('memberData', JSON.stringify(memberList)) }, [memberList]);
-
-    // Copy memberList để tìm kiếm
-    const [tempList,setTempList] = useState(memberList);
 
     // Duyệt copyList để render view
     const members = tempList.map((item, index) =>
         <Member
             key={index}
             name={item.name}
-            optionHandleClick={() => setShowModalOption({ status: true, id: item.id })}
+            handleClickOption={() => setShowModalOption({ status: true, id: item.id })}
         />
     );
 
@@ -67,9 +69,6 @@ export default function Users() {
             ...memberList,
         ];
         setMemberList(data)
-        setTempList(data)
-
-        refreshState()
     };
 
     // Feature submit modal rename
@@ -78,11 +77,7 @@ export default function Users() {
         newList.forEach(item => {
             if(item.id === showModalOption.id) item.name = renameInputValue.current.value.trim()
         })
-
         setMemberList(newList)
-        setTempList(newList)
-
-        refreshState()
     }
 
     // Feature submit modal delete
@@ -92,11 +87,7 @@ export default function Users() {
             newList.findIndex(item => item.id === showModalOption.id),
             1
         )
-
         setMemberList(newList)
-        setTempList(newList)
-
-        refreshState()
     }
     return (
         <>

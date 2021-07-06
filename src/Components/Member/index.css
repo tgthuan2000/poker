@@ -1,15 +1,18 @@
 .member{
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    padding: 5px 10px;
     margin-bottom: 20px;
     --member-height: 50px;
     user-select: none;
+    transition: background .3s ease;
+    border-radius: var(--border-radius);
 }
 
 .member-avatar{
     border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.2);
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    background-color: hsl(0, 0%, 80%);
     height: var(--member-height);
     width: var(--member-height);
     margin-right: 8px;
@@ -18,13 +21,15 @@
     justify-content: center;
     font-size: 30px;
     font-weight: 600;
-    color: rgba(0, 0, 0, 0.3);
+    /* color: rgba(0, 0, 0, 0.3); */
+    color: hsl(0, 0%, 50%);
     text-transform: uppercase;
 }
 
 .member-name{
     font-size: 18px;
-    color: rgba(0, 0, 0, 0.3);
+    /* color: rgba(0, 0, 0, 0.3); */
+    color: hsl(0, 0%, 50%);
     font-weight: 500;
     max-height: var(--member-height);
     line-height: calc(var(--member-height) / 2);
@@ -42,4 +47,20 @@
     padding: 6px 14px;
     color: rgba(0, 0, 0, 0.3);
     cursor: pointer;
+}
+
+.member-checkbox{
+    cursor: pointer;
+}
+
+.member-modal{
+    cursor: pointer;
+}
+
+.member-checked{
+    background: rgba(241, 187, 223, 0.5);
+}
+
+.member-icon{
+    color: var(--primary-color);
 }

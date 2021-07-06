@@ -10,7 +10,7 @@ const Games = () =>  {
     const games = gameList.map( game =>
         <li className="game-item" key={game.id}>
             <Link to={`/games/${game.id}`} className='game-link'>
-                <img className='game-img' src={`./img/${game.iconImage}`} alt='img' />
+                <img className='game-img' src={`./img/${game.iconImage}`} alt=' ' />
                 <span className="game-title">{game.name}</span>
             </Link>
         </li>

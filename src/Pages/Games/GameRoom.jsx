@@ -42,13 +42,12 @@ const GameRooms = () =>  {
 
     return (
         <>
-        <div className='GameRoom'>
+        <div className='game-room'>
             <div className="game-room-header">
                 <div className="game-name">
                     {game.name}
                 </div>
                 <Button
-                    className="game-add-room"
                     active={addRoom}
                     outline={!addRoom}
                     onClick={() => setAddRoom(true)}

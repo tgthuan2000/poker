@@ -1,21 +1,26 @@
+.game-room{
+    padding: 10px 10px 0;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
 .game-room-header{
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 0 10px;
-    margin-bottom: 20px;
+    padding: 0 4px;
+    margin-bottom: 10px;
 }
 
 .game-name{
-    margin-top: 10px;
     text-transform: uppercase;
     font-weight: 500;
     font-size: 20px;
     color: var(--primary-color);
 }
 
-.game-add-room{
-    margin-top: 10px;
-    font-weight: 600;
+.game-room-list{
+    max-height: calc(100vh - 80px);
+    overflow: scroll;
 }

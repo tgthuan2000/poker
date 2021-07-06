@@ -36,8 +36,23 @@ export default function Users() {
         setShowDeleteModal(false)
         inputValue.current = null
         renameInputValue.current = null
+        setEnd(false)
     }, [memberList]);
+    
+    const [end,setEnd] = useState(false)
+    const [onTopBtn,setOnTopBtn] = useState(false)
+    const handleScroll = (e) => {
+        if(e.target.scrollTop === e.target.scrollTopMax && e.target.scrollTop !==0)
+            setEnd(true)
+        else setEnd(false)
 
+        if(e.target.scrollTop >= 50)
+            setOnTopBtn(true)
+        else
+            setOnTopBtn(false)
+    }
+
+    // useEffect(() => handleScroll, [])
 
     // Duyệt copyList để render view
     const members = tempList.map((item, index) =>
@@ -50,6 +65,7 @@ export default function Users() {
 
     // Feature tìm kiếm, lọc member
     const handleOnInput = () => {
+        setEnd(false)
         // tìm kiếm, lọc member
         setTempList(filter(memberList, inputValue, 'name'))
         if(!inputValue.current.value){
@@ -97,7 +113,7 @@ export default function Users() {
                     {check ?
                     <>
                         <Input
-                            className="user-header-item user-header-input"
+                            className="user-header-input"
                             placeholder='Enter a new member name'
                             onInput={handleOnInput}
                             useRef={inputValue}
@@ -106,7 +122,6 @@ export default function Users() {
                         {/* Kiểm tra input value có hợp lệ ?  */}
                         { showAddMemberBtn ?
                             <Button
-                                className="user-header-item"
                                 active
                                 onClick={handleClickAddMember}
                             >
@@ -114,7 +129,6 @@ export default function Users() {
                             </Button>
                             :
                             <Button
-                                className="user-header-item"
                                 onClick={() => {setCheck(false); setTempList(memberList)}}
                             >
                                 Back
@@ -123,7 +137,6 @@ export default function Users() {
                     </>
                     :
                     <Button
-                        className="user-header-item"
                         onClick={() => setCheck(true)}
                         icon='fas fa-plus'
                     >
@@ -131,10 +144,15 @@ export default function Users() {
                     </Button>
                     }
                 </div>
-                <div className="user-list">
+                <div className="user-list" onScroll={handleScroll}>
                     {/* Hiển thị memberList */}
                     { members.length > 0 && members }
                 </div>
+                    { end && <div className='endding-message'>You have reached the bottom of the page ...</div> }
+                    { onTopBtn &&
+                        <Button>
+                        </Button>
+                    }
             </div>
 
             {/* Hiển thị modal option (3 chấm) */}

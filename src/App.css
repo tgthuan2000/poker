@@ -11,6 +11,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 html{
@@ -29,9 +31,12 @@ html{
   -ms-overflow-style: none;
 }
 
+::-webkit-scrollbar{
+  display: none;
+}
+
 #wrapper{
   margin-left: var(--navbar-width);
-  padding: 12px;
   transition: all .3s ease;
   width: calc(var(--screen-width) - var(--navbar-width));
 }

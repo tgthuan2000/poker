@@ -165,7 +165,7 @@ export default function Users() {
                         > Rename </ModalListItem>
                         <ModalListItem
                             colorIcon='green'
-                            icon='fas fa-users'
+                            icon='fas fa-gamepad'
                             // onClick={}
                         > Add games </ModalListItem>
                         <ModalListItem

@@ -216,7 +216,7 @@ export default function Users() {
                     acceptText='Yes, I do!'
                 >
                     <span className='modal-delete-message'>
-                        Do you want delete <b>{memberList.find(item => item.id === showModalOption.id).name}</b> ?
+                        Do you want delete <b>{memberList.find(item => item.id === showModalOption.id)?.name}</b> ?
                     </span>
                 </Modal>
             }

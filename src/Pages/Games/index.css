@@ -15,7 +15,9 @@
     border-radius: var(--border-radius);
     max-height: 80%;
     width: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .game-item{

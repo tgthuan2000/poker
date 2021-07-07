@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './index.css'
-import Member from '../../Components/Member/index.jsx'
+import Member from '../../Components/Member'
 import { Button } from '../../Components/Button'
 import { Input } from '../../Components/Input'
 import { Modal, ModalInput, ModalList, ModalListItem } from '../../Components/Modal'
-import { filter, search, randomString} from '../../Features/feature'
+import { filter, search, randomString, randomNumber} from '../../Features'
 
 export default function Users() {
     // Khai báo state, ref, ...
@@ -36,36 +36,20 @@ export default function Users() {
         setShowDeleteModal(false)
         inputValue.current = null
         renameInputValue.current = null
-        setEnd(false)
     }, [memberList]);
     
-    const [end,setEnd] = useState(false)
-    const [onTopBtn,setOnTopBtn] = useState(false)
-    const handleScroll = (e) => {
-        if(e.target.scrollTop === e.target.scrollTopMax && e.target.scrollTop !==0)
-            setEnd(true)
-        else setEnd(false)
-
-        if(e.target.scrollTop >= 50)
-            setOnTopBtn(true)
-        else
-            setOnTopBtn(false)
-    }
-
-    // useEffect(() => handleScroll, [])
-
     // Duyệt copyList để render view
     const members = tempList.map((item, index) =>
         <Member
             key={index}
             name={item.name}
-            handleClickOption={() => setShowModalOption({ status: true, id: item.id })}
+            color={item.color}
+            optionClick={() => setShowModalOption({ status: true, id: item.id })}
         />
     );
 
     // Feature tìm kiếm, lọc member
     const handleOnInput = () => {
-        setEnd(false)
         // tìm kiếm, lọc member
         setTempList(filter(memberList, inputValue, 'name'))
         if(!inputValue.current.value){
@@ -77,14 +61,14 @@ export default function Users() {
 
     // Feature thêm member
     const handleClickAddMember = () => {
-        const data = [
+        setMemberList([
             {
                 id: randomString(), // random id, default 5 chars
+                color: randomNumber(),
                 name: inputValue.current.value.trim(),
             },
             ...memberList,
-        ];
-        setMemberList(data)
+        ])
     };
 
     // Feature submit modal rename
@@ -105,13 +89,29 @@ export default function Users() {
         )
         setMemberList(newList)
     }
+
+    // Random create member
+    const randomCreateMember = () => {
+        const numberLoop = 15
+        const array = [...memberList]
+        for(let i = 0 ; i < numberLoop ; i++){
+            const random = randomString(15)
+            array.push(
+                {
+                    id: random,
+                    color: randomNumber(),
+                    name: random,
+                }
+            )
+            setMemberList(array)
+        }
+    }
     return (
         <>
             <div className='user'>
-                <div className='user-header'>
                     {/* Kiểm tra có hiển thị btn Add Member hay input */}
                     {check ?
-                    <>
+                    <div className='user-header'>
                         <Input
                             className="user-header-input"
                             placeholder='Enter a new member name'
@@ -134,25 +134,27 @@ export default function Users() {
                                 Back
                             </Button>
                         }
-                    </>
+                    </div>
                     :
-                    <Button
-                        onClick={() => setCheck(true)}
-                        icon='fas fa-plus'
-                    >
-                        Add Member
-                    </Button>
+                    <div className="user-header-temp">
+                        <Button
+                            onClick={randomCreateMember}
+                            active
+                        >
+                            Auto Add
+                        </Button>
+                        <Button
+                            onClick={() => setCheck(true)}
+                            icon='fas fa-plus'
+                        >
+                            Add Member
+                        </Button>
+                    </div>
                     }
-                </div>
-                <div className="user-list" onScroll={handleScroll}>
-                    {/* Hiển thị memberList */}
+                <div className="user-list">
+                    {/* Hiển thị memberList // Khi xóa AutoAdd chỉ cần đưa class userList ra ngoài bọc cả thẻ*/}
                     { members.length > 0 && members }
                 </div>
-                    { end && <div className='endding-message'>You have reached the bottom of the page ...</div> }
-                    { onTopBtn &&
-                        <Button>
-                        </Button>
-                    }
             </div>
 
             {/* Hiển thị modal option (3 chấm) */}
@@ -187,6 +189,11 @@ export default function Users() {
                                 }
                             }
                         > Delete </ModalListItem>
+                        <ModalListItem
+                            colorIcon='orange'
+                            icon='fas fa-pencil-alt'
+                            // onClick={}
+                        > Change color </ModalListItem>
                     </ModalList>
                 </Modal>
             }

@@ -5,12 +5,16 @@ import { Button } from '../../Components/Button'
 import { gameData } from '../../Data'
 import { Modal } from '../../Components/Modal'
 import { MemberModal } from '../../Components/Member'
+import { Room } from '../../Components/Room'
+import { randomChart } from '../../Features'
+
 
 const GameRooms = () =>  {
     let { gameId } = useParams()
     const game = gameData.find(game => game.id === gameId)
     const [addRoom, setAddRoom] = useState(false)
     const memberList = JSON.parse(localStorage.getItem('memberData')) || []
+    const [roomList, setRoomList] = useState(JSON.parse(localStorage.getItem('pokerData')) || [])
     const [data, setData] = useState([])
 
     const handleClick = (id) => {
@@ -28,18 +32,38 @@ const GameRooms = () =>  {
         <MemberModal
             key={index}
             name={item.name}
+            color={item.color}
             onClick={() => handleClick(item.id)}
         />
     )
 
     useEffect(() => {
+        localStorage.setItem('pokerData', JSON.stringify(roomList))
         // refresh state
-    },[  ])
+        setAddRoom(false)
+        setData([])
+    },[ roomList ])
 
     const handleSubmitAddRoom = () => {
-        
+        const random =  randomChart(10)
+        setRoomList([
+            {
+                'room-id': random,
+                'room-name': gameId + random,
+                'list-member-ids': data
+            },
+            ...roomList
+        ])
     }
 
+    const rooms = roomList.map((item, index) => 
+        <Room
+            key={index}
+            name={item['room-name']}
+            length={item['list-member-ids'].length}
+            link={`./${gameId}/${item['room-id']}`}
+        />
+    )
     return (
         <>
         <div className='game-room'>
@@ -56,7 +80,7 @@ const GameRooms = () =>  {
                 </Button>
             </div>
             <div className="game-room-list">
-                Room1
+                {rooms}
             </div>
         </div>
 

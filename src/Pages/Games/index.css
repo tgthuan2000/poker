@@ -1,27 +1,17 @@
-.Games{
-    height: 100vh;
-    display: flex;
-    overflow: hidden;
-    justify-content: center;
-    align-items: center;
-}
 .game-list{
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     list-style: none;
-    padding-top: 25px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-    border-radius: var(--border-radius);
-    max-height: 80%;
+    padding-top: 20px;
     width: 100%;
-    overflow-y: scroll;
 }
 
 .game-item{
+    width: 150px;
     margin-bottom: 25px;
-    flex-basis: 35%;
+    border-radius: var(--border-radius);
+    border: 1px solid #999;
 }
 
 .game-link{
@@ -30,9 +20,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* border-radius: var(--border-radius);
-    border: 1px solid var(--primary-color);
-    box-shadow: 0 0 2px var(--primary-color); */
     color: #555;
     cursor: pointer;
     padding: 18px 0;

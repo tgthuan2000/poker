@@ -7,6 +7,16 @@
   --btnIcon-size: 40px;
   --navbar-openSize: 250px;
 }
+
+@keyframes slideShow {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
 *{
   margin: 0;
   padding: 0;

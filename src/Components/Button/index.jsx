@@ -26,7 +26,6 @@ function Bugger({ active, onClick}) {
     )
 }
 
-
 function Button({ children, onClick, icon, active, outline, className}) {
     return (
         <button className={`btn btnText${active ? ' active' : ''}${outline ? ' outline' : ''}${className ? ' '+className : ''}`} onClick={onClick}>
@@ -35,4 +34,15 @@ function Button({ children, onClick, icon, active, outline, className}) {
         </button>
     )
 }
-export { NavLink, Bugger, Button }
+
+
+function ButtonLink({ children, link, icon, active, outline, className}) {
+    return (
+        <Link to={link} className={`btn btnText${active ? ' active' : ''}${outline ? ' outline' : ''}${className ? ' '+className : ''}`}>
+            {icon ? <i className={icon} /> : ''}
+            {children}
+        </Link>
+    )
+}
+
+export { NavLink, Bugger, Button, ButtonLink }

@@ -2,30 +2,21 @@ import React, { useState } from 'react'
 import './index.css'
 import { NavLink, Bugger } from '../Button'
 import { NavbarMenu } from '../../Data'
+import { useLocation } from 'react-router'
 
 export default function Navbar() {
-    const [listMenu,setListMenu] = useState(NavbarMenu)
     const [bugger,setBugger] = useState(false)
-    const setFalse = (indexItem) => {
-        const list = [...listMenu]
-        list.forEach(item => item.active = false)
-        if(indexItem != null) list[indexItem].active = true
-        setListMenu(list)
-    }
     const handleBuggerClick = () => {
         setBugger(!bugger)
     }
-    const handleClick = (indexItem) => {
-        setFalse(indexItem)
-        setBugger(false)
-    }
-    const menu = listMenu.map((item, index) => 
+    const localtion = useLocation()
+    const menu = NavbarMenu.map((item, index) => 
         <NavLink
             key={index}
-            active={item.active}
             name={item.name}
             path={item.path}
-            onClick={() => handleClick(index)}
+            onClick={() => setBugger(false)}
+            active={'/' + localtion.pathname.split('/')?.[1] === item.path}
         >
             <i className={item.icon}></i>
         </NavLink>

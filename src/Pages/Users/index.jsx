@@ -5,6 +5,7 @@ import { Button } from '../../Components/Button'
 import { Input } from '../../Components/Input'
 import { Modal, ModalInput, ModalList, ModalListItem } from '../../Components/Modal'
 import { filter, search, randomString, randomNumber} from '../../Features'
+import PageEmpty from '../../Components/PageEmpty'
 
 export default function Users() {
     // Khai báo state, ref, ...
@@ -95,12 +96,12 @@ export default function Users() {
         const numberLoop = 15
         const array = [...memberList]
         for(let i = 0 ; i < numberLoop ; i++){
-            const random = randomString(15)
-            array.push(
+            const random = randomString(7)
+            array.unshift(
                 {
                     id: random,
                     color: randomNumber(),
-                    name: random,
+                    name: 'member_'+random,
                 }
             )
             setMemberList(array)
@@ -136,6 +137,7 @@ export default function Users() {
                         }
                     </div>
                     :
+                    // Khi xóa AutoAdd chỉ cần đưa class user-header ra ngoài bọc cả thẻ và bỏ class user-header-temp
                     <div className="user-header-temp">
                         <Button
                             onClick={randomCreateMember}
@@ -151,10 +153,17 @@ export default function Users() {
                         </Button>
                     </div>
                     }
-                <div className="user-list">
-                    {/* Hiển thị memberList // Khi xóa AutoAdd chỉ cần đưa class userList ra ngoài bọc cả thẻ*/}
-                    { members.length > 0 && members }
-                </div>
+                    {/* Hiển thị memberList*/}
+                    { members.length > 0 ?
+                        <div className='user-list'>
+                            {members}
+                        </div>
+                        :
+                        <PageEmpty
+                            text='Add member please!!!'
+                            img='empty.png'
+                        />
+                    }
             </div>
 
             {/* Hiển thị modal option (3 chấm) */}

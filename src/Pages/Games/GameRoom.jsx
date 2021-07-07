@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import './gameRoom.css'
 import { useParams } from 'react-router'
-import { Button } from '../../Components/Button'
+import { Button, ButtonLink } from '../../Components/Button'
 import { gameData } from '../../Data'
 import { Modal } from '../../Components/Modal'
 import { MemberModal } from '../../Components/Member'
 import { Room } from '../../Components/Room'
-import { randomChart } from '../../Features'
+import { randomString } from '../../Features'
+import PageEmpty from '../../Components/PageEmpty'
 
 
 const GameRooms = () =>  {
@@ -36,7 +37,6 @@ const GameRooms = () =>  {
             onClick={() => handleClick(item.id)}
         />
     )
-
     useEffect(() => {
         localStorage.setItem('pokerData', JSON.stringify(roomList))
         // refresh state
@@ -45,11 +45,11 @@ const GameRooms = () =>  {
     },[ roomList ])
 
     const handleSubmitAddRoom = () => {
-        const random =  randomChart(10)
+        const random =  randomString(10)
         setRoomList([
             {
                 'room-id': random,
-                'room-name': gameId + random,
+                'room-name': gameId + '_' + random,
                 'list-member-ids': data
             },
             ...roomList
@@ -79,9 +79,15 @@ const GameRooms = () =>  {
                     New room
                 </Button>
             </div>
+            {rooms.length > 0 ?
             <div className="game-room-list">
                 {rooms}
             </div>
+            :
+            <PageEmpty 
+                text='Just add a new room!!!'
+            />
+            }
         </div>
 
         {addRoom && 
@@ -89,10 +95,15 @@ const GameRooms = () =>  {
                 submitModal={handleSubmitAddRoom}
                 cancleModal={() => setAddRoom(false)}
                 header='Choose members'
-                cancleText='Cancle'
-                acceptText={data.length > 0 && 'Create!'}
+                cancleText={list.length > 0 && 'Cancle'}
+                acceptText={data.length >= 2 && 'Create!'}
             >
-                {list}
+                {list.length > 0 ? list :
+                    <ButtonLink
+                        active
+                        link='/users'
+                    >Go to add member!</ButtonLink>
+                }
             </Modal>
         }
         </>

@@ -2,23 +2,42 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
 
-const Room = ({ name, length, link }) => {
+const Room = ({ name, length, link, createAt, active }) => {
     return (
-        <Link to={link} className='room'>
-            <h4 className="room-name">{name}</h4>
+        <Link to={link} className={`room${active ? ' active' : ''}`}>
             <div className="room-wrapper">
+                <h4 className="room-name">{name}</h4>
+                <b className="room-status">{active ? 'Active' : 'Block'}</b>
+            </div>
+            {/* <div className="room-wrapper">
                 <span>1st - Hồ Thị Thơm</span>
                 <span>1500 points</span>
             </div>
             <div className="room-wrapper">
                 <span>2nd - Trần Gia Thuận</span>
                 <span>1200 points</span>
-            </div>
+            </div> */}
             <div className="room-wrapper">
                 <span>{length} members</span>
-                <span>10:10:10 08/07/2021</span>
+                <span>{createAt}</span>
             </div>
         </Link>
     )
 }
-export { Room }
+
+const ModalRoom = ({ name, length, onClick, active }) => {
+    return (
+        <div className={`room room-modal${active ? ' active' : ''}`} onClick={onClick}>
+            <div className="room-wrapper">
+                <h4 className="room-name">{name}</h4>
+            </div>
+            <div className="room-wrapper">
+                <span>{length} members</span>
+                <span>mới tạo gần đây</span>
+            </div>
+        </div>
+    )
+}
+
+
+export { Room, ModalRoom }

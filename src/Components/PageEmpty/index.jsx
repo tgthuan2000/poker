@@ -4,7 +4,7 @@ import './index.css'
 const PageEmpty = ({ text, img }) => {
     return (
         <div className="page-empty">
-            <img src={`./img/${img}`} alt=" "/>
+            <img src={img} alt=" "/>
             <span>{text}</span>
         </div>
     )

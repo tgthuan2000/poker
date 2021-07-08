@@ -45,7 +45,7 @@ html{
   display: none;
 }
 
-#wrapper{
+.app-wrap{
   margin-left: var(--navbar-width);
   transition: all .3s ease;
   width: calc(var(--screen-width) - var(--navbar-width));

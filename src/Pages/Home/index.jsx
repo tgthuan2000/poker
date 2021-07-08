@@ -3,7 +3,7 @@ import './index.css'
 
 export default function Home() {
     return (
-        <div className='Home'>
+        <div className='home'>
             Home
         </div>
     )

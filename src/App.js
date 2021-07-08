@@ -7,31 +7,39 @@ import GameRooms from './Pages/Games/GameRoom.jsx';
 import GamePlay from './Pages/Games/GamePlay.jsx';
 import Users from './Pages/Users';
 
-
 function App() {
   return (
     <Router>
       <div className='App'>
-      <Navbar/>
-      <div id='wrapper'>
         <Switch>
           <Route path='/' exact>
-            <Home/>
+            <Navbar/>
+            <div className='app-wrap'>
+              <Home/>
+            </div>
           </Route>
           <Route path='/users' exact>
-            <Users/>
+            <Navbar/>
+            <div className='app-wrap'>
+              <Users/>
+            </div>
           </Route>
           <Route path='/games' exact>
-            <Games/>
+            <Navbar/>
+            <div className='app-wrap'>
+              <Games/>
+            </div>
           </Route>
           <Route path='/games/:gameId' exact>
-            <GameRooms/>
+            <Navbar/>
+            <div className='app-wrap'>
+              <GameRooms/>
+            </div>
           </Route>
           <Route path='/games/:gameId/:roomId' exact>
             <GamePlay/>
           </Route>
         </Switch>
-      </div>
       </div>
     </Router>
   );

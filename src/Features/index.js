@@ -30,3 +30,16 @@ export const randomString = (length = 5) => {
 export const randomNumber = () => {
    return Math.round(Math.random() * 355 )
 }
+
+export const getDateTime = () => {
+    const today = new Date();
+    const formatDateTime = (element) => {
+        return element.toString().length === 2 ? element : `0${element}`
+    }
+    const hours = formatDateTime(today.getHours())
+    const minute = formatDateTime(today.getMinutes())
+    const second = formatDateTime(today.getSeconds())
+    const date = formatDateTime(today.getDate())
+    const month = formatDateTime(today.getMonth()+1)
+    return hours + ":" + minute + ":" + second + " - " + date + '/' + month + '/' + today.getFullYear();
+}

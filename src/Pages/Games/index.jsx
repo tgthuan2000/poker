@@ -16,7 +16,7 @@ const Games = () =>  {
         </li>
     )
     return (
-        <div className='Games'>
+        <div className='game'>
             <ul className='game-list'>
                 {games}
             </ul>

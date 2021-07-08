@@ -7,6 +7,7 @@
     width: var(--navbar-width);
     padding: 0 calc( ( var(--navbar-width) - var(--btnIcon-size) ) / 2);
     transition: width .3s ease;
+    will-change: width;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
@@ -18,7 +19,7 @@
     width: var(--navbar-openSize);
 }
 
-.navbar.show + #wrapper{
+.navbar.show + .app-wrap{
     margin-left: var(--navbar-openSize);
 }
 

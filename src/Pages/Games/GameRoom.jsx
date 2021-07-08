@@ -6,7 +6,7 @@ import { gameData } from '../../Data'
 import { Modal, ModalComfirm } from '../../Components/Modal'
 import { MemberModal } from '../../Components/Member'
 import { Room } from '../../Components/Room'
-import { randomString } from '../../Features'
+import { getDateTime, randomString } from '../../Features'
 import PageEmpty from '../../Components/PageEmpty'
 
 
@@ -47,12 +47,15 @@ const GameRooms = () =>  {
     },[ roomList ])
 
     const handleSubmitAddRoom = () => {
+        const dateTime = getDateTime()
         const random =  randomString(10)
         setRoomList([
             {
                 'room-id': random,
                 'room-name': gameId + '_' + random,
                 'room-members': data,
+                'room-create-at': dateTime,
+                'room-active': true,
             },
             ...roomList
         ])
@@ -64,6 +67,8 @@ const GameRooms = () =>  {
             key={index}
             name={item['room-name']}
             length={item['room-members'].length}
+            createAt={item['room-create-at']}
+            active={item['room-active']}
             link={`./${gameId}/${item['room-id']}`}
         />
     )
@@ -83,14 +88,14 @@ const GameRooms = () =>  {
                 </Button>
             </div>
             {rooms.length > 0 ?
-            <div className="game-room-list">
-                {rooms}
-            </div>
+                <div className="game-room-list">
+                    {rooms}
+                </div>
             :
-            <PageEmpty
-                text='Just add a new room!!!'
-                img='empty-room.png'
-            />
+                <PageEmpty
+                    text='Just add a new room!!!'
+                    img='../img/empty-room.png'
+                />
             }
         </div>
 
@@ -101,6 +106,8 @@ const GameRooms = () =>  {
                 header='Choose members'
                 cancleText={list.length >= 2 && 'Cancle'}
                 acceptText={data.length >= 2 && 'Create!'}
+                btnClose={false}
+                overlayCancle={false}
             >
                 {list.length >= 2 ? list :
                     <ModalComfirm height='35px'>

@@ -6,6 +6,8 @@ import { Input } from '../../Components/Input'
 import { Modal, ModalInput, ModalList, ModalListItem, ModalMessage } from '../../Components/Modal'
 import { filter, search, randomString, randomNumber} from '../../Features'
 import PageEmpty from '../../Components/PageEmpty'
+import { gameData } from '../../Data'
+import { ModalRoom } from '../../Components/Room'
 
 export default function Users() {
     // Khai báo state, ref, ...
@@ -15,11 +17,20 @@ export default function Users() {
     const [showRenameModal,setShowRenameModal] = useState(false)
     const [acceptRename,setAcceptRename] = useState(false)
     const [showDeleteModal,setShowDeleteModal] = useState(false)
+    const [showAddGameModal, setShowAddGameModal] = useState(false)
+    const [showAddRoomModal, setShowAddRoomModal] = useState(false)
+    const [roomData, setRoomData] = useState([])
     const inputValue = useRef()
     const renameInputValue = useRef()
+    const [isSuccess, setIsSuccess] = useState({status: false, message: ''})
+    const [rooms,setRooms] = useState([])
+    const [games, setGames] = useState([])
 
     // Nhận dữ liệu từ localStorage và truyền vào state
     const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
+    
+    // Lấy dữ liệu room
+    const roomLists = JSON.parse(localStorage.getItem('pokerData')) || []
 
     // Copy memberList để tìm kiếm
     const [tempList,setTempList] = useState(memberList);
@@ -37,6 +48,7 @@ export default function Users() {
         setShowDeleteModal(false)
         inputValue.current = null
         renameInputValue.current = null
+        setRoomData([])
     }, [memberList]);
     
     // Duyệt copyList để render view
@@ -79,6 +91,12 @@ export default function Users() {
             if(item.id === showModalOption.id) item.name = renameInputValue.current.value.trim()
         })
         setMemberList(newList)
+        setIsSuccess(
+            {
+                status: true,
+                message: 'Rename success!!!'
+            }
+        )
     }
 
     // Feature submit modal delete
@@ -89,6 +107,12 @@ export default function Users() {
             1
         )
         setMemberList(newList)
+        setIsSuccess(
+            {
+                status: true,
+                message: 'Delete success!!!'
+            }
+        )
     }
 
     // Random create member
@@ -107,6 +131,45 @@ export default function Users() {
             setMemberList(array)
         }
     }
+
+    // const handleClickAddRoom = roomId => {
+    //     const index = roomData.findIndex(item => item === roomId);
+    //     if(index === -1)
+    //         setRoomData([...roomData, roomId])
+    //     else{
+    //         const temp = [...roomData]
+    //         temp.splice(index, 1)
+    //         setRoomData(temp)
+    //     }
+    // }
+    // const showRooms = () => {
+    //     setRooms(roomLists
+    //         .filter(item => item['room-active'] && !item['room-members'].includes(showModalOption.id))
+    //         .map((item, index) => 
+    //             <ModalRoom
+    //                 key={index}
+    //                 name={item['room-name']}
+    //                 length={item['room-members'].length}
+    //                 onClick={() => handleClickAddRoom(item['room-id'])}
+    //                 active={roomData.includes(item['room-id'])}
+    //             />
+    //         )
+    //     )
+    //     setShowAddGameModal(false)
+    //     setShowAddRoomModal(true)
+    // }
+
+    // const handleSubmitAddRoomModal = () => {
+    //     setShowAddRoomModal(false)
+    //     setRoomData([])
+    //     setIsSuccess(
+    //         {
+    //             status: true,
+    //             message: 'Add room(s) success!!'
+    //         }
+    //     )
+    // }
+
     return (
         <>
             <div className='user'>
@@ -159,10 +222,11 @@ export default function Users() {
                             {members}
                         </div>
                     }
+                    {/* Hiển thị emptyPage*/}
                     {memberList.length === 0 &&
                         <PageEmpty
                             text='Add member please!!!'
-                            img='empty.png'
+                            img='./img/empty.png'
                         />
                     }
             </div>
@@ -170,7 +234,12 @@ export default function Users() {
             {/* Hiển thị modal option (3 chấm) */}
             {showModalOption.status &&
                 <Modal 
-                    cancleModal={() => setShowModalOption({status: false, id: null})}
+                    cancleModal={() =>
+                        {
+                            setRooms([])
+                            setShowModalOption({status: false, id: null})
+                        }
+                    }
                     header='My option'
                 >
                     <ModalList>
@@ -179,7 +248,7 @@ export default function Users() {
                             icon='fas fa-signature'
                             onClick={() =>
                                 {
-                                    setShowModalOption({status: false, id: showModalOption.id});
+                                    setShowModalOption({...showModalOption, status: false});
                                     setShowRenameModal(true);
                                 }
                             }
@@ -187,14 +256,28 @@ export default function Users() {
                         <ModalListItem
                             colorIcon='green'
                             icon='fas fa-gamepad'
-                            // onClick={}
+                            onClick={() => 
+                                {
+                                    setShowModalOption({...showModalOption, status: false});
+                                    setShowAddGameModal(true);
+                                    setGames(
+                                        gameData.map((item, index) => 
+                                            <ModalListItem
+                                                key={index}
+                                                img={`./img/${item.iconImage}`}
+                                                // onClick={showRooms}
+                                            > {item.name} </ModalListItem>
+                                        )
+                                    )
+                                }
+                            }
                         > Add games </ModalListItem>
                         <ModalListItem
                             colorIcon='red'
                             icon='fas fa-trash-alt'
                             onClick={() =>
                                 {
-                                    setShowModalOption({status: false, id: showModalOption.id});
+                                    setShowModalOption({...showModalOption, status: false});
                                     setShowDeleteModal(true)
                                 }
                             }
@@ -224,7 +307,7 @@ export default function Users() {
                     cancleModal={() =>
                         {
                             setShowRenameModal(false);
-                            setShowModalOption({status:true, id:showModalOption.id});
+                            setShowModalOption({...showModalOption, status:true});
                             setAcceptRename(false)
                         }
                     }
@@ -245,14 +328,54 @@ export default function Users() {
             }
 
             {/* Hiển thị modal add group */}
-            
+            {showAddGameModal &&
+                <Modal 
+                    cancleModal={() =>
+                        {
+                            setShowAddGameModal(false);
+                            setShowModalOption({...showModalOption, status:true});
+                        }
+                    }
+                    header='Choose game'
+                    cancleText='Cancle'
+                >
+                    <ModalList>
+                        {games}
+                    </ModalList>
+                </Modal>
+            }
+
+            {showAddRoomModal &&
+                <Modal
+                    cancleModal={() =>
+                        {
+                            setShowAddRoomModal(false);
+                            setRoomData([])
+                            setShowModalOption({...showModalOption, status:true});
+                        }
+                    }
+                    // submitModal={handleSubmitAddRoomModal}
+                    header='Add Rooms'
+                    cancleText='Cancle'
+                    overlayCancle={false}
+                    btnClose={false}
+                    acceptText={roomData.length > 0 && 'Add'}
+                >
+                    {rooms.length > 0 ? rooms :
+                        <ModalMessage>
+                            No matching room found!!!
+                        </ModalMessage>
+                    }
+                </Modal>
+            }
+
             {/* Hiển thị modal delete */}
             {showDeleteModal && 
                 <Modal
                     cancleModal={() =>
                         {
                             setShowDeleteModal(false);
-                            setShowModalOption({status:true, id:showModalOption.id})
+                            setShowModalOption({...showModalOption, status:true})
                         }
                     }
                     submitModal={handleSubmitDeleteModal}
@@ -263,6 +386,19 @@ export default function Users() {
                 >
                     <ModalMessage>
                         Do you want delete <b>{memberList.find(item => item.id === showModalOption.id)?.name}</b> ?
+                    </ModalMessage>
+                </Modal>
+            }
+
+            {/* Hiện status */}
+            {isSuccess.status &&
+                <Modal
+                    header='Message'
+                    acceptText='Okay!!!'
+                    submitModal={() => setIsSuccess({status: false, message: ''})}
+                >
+                    <ModalMessage>
+                        {isSuccess.message}
                     </ModalMessage>
                 </Modal>
             }

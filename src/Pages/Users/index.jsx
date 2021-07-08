@@ -7,7 +7,7 @@ import { Modal, ModalInput, ModalList, ModalListItem, ModalMessage } from '../..
 import { filter, search, randomString, randomNumber} from '../../Features'
 import PageEmpty from '../../Components/PageEmpty'
 import { gameData } from '../../Data'
-//import { ModalRoom } from '../../Components/Room'
+import { ModalRoom } from '../../Components/Room'
 
 export default function Users() {
     // Khai báo state, ref, ...
@@ -23,14 +23,12 @@ export default function Users() {
     const inputValue = useRef()
     const renameInputValue = useRef()
     const [isSuccess, setIsSuccess] = useState({status: false, message: ''})
-    const [rooms,setRooms] = useState([])
-    const [games, setGames] = useState([])
 
     // Nhận dữ liệu từ localStorage và truyền vào state
     const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
     
     // Lấy dữ liệu room
-    //const roomLists = JSON.parse(localStorage.getItem('pokerData')) || []
+    const roomLists = JSON.parse(localStorage.getItem('pokerData')) || []
 
     // Copy memberList để tìm kiếm
     const [tempList,setTempList] = useState(memberList);
@@ -107,6 +105,15 @@ export default function Users() {
             1
         )
         setMemberList(newList)
+
+        const tempRoomLists = [...roomLists]
+        tempRoomLists.forEach(item => {
+            let index = item['room-members'].indexOf(showModalOption.id)
+            if(index !== -1)
+                item['room-members'].splice(index,1)
+        })
+        localStorage.setItem('pokerData', JSON.stringify(tempRoomLists))
+
         setIsSuccess(
             {
                 status: true,
@@ -132,44 +139,59 @@ export default function Users() {
         }
     }
 
-    // const handleClickAddRoom = roomId => {
-    //     const index = roomData.findIndex(item => item === roomId);
-    //     if(index === -1)
-    //         setRoomData([...roomData, roomId])
-    //     else{
-    //         const temp = [...roomData]
-    //         temp.splice(index, 1)
-    //         setRoomData(temp)
-    //     }
-    // }
-    // const showRooms = () => {
-    //     setRooms(roomLists
-    //         .filter(item => item['room-active'] && !item['room-members'].includes(showModalOption.id))
-    //         .map((item, index) => 
-    //             <ModalRoom
-    //                 key={index}
-    //                 name={item['room-name']}
-    //                 length={item['room-members'].length}
-    //                 onClick={() => handleClickAddRoom(item['room-id'])}
-    //                 active={roomData.includes(item['room-id'])}
-    //             />
-    //         )
-    //     )
-    //     setShowAddGameModal(false)
-    //     setShowAddRoomModal(true)
-    // }
+    const handleSubmitAddRoomModal = () => {
+        const tempRoomLists = [...roomLists]
+        tempRoomLists.forEach(item => {
+            if(roomData.includes(item['room-id']))
+                item['room-members'].push(showModalOption.id)
+        })
+        localStorage.setItem('pokerData', JSON.stringify(tempRoomLists))
+        setShowModalOption({status: false, id: null})
+        setShowAddRoomModal(false)
+        setRoomData([])
+        setIsSuccess(
+            {
+                status: true,
+                message: 'Add room(s) success!!'
+            }
+        )
+    }
 
-    // const handleSubmitAddRoomModal = () => {
-    //     setShowAddRoomModal(false)
-    //     setRoomData([])
-    //     setIsSuccess(
-    //         {
-    //             status: true,
-    //             message: 'Add room(s) success!!'
-    //         }
-    //     )
-    // }
+    const handleClickRoom = roomId => {
+        const index = roomData.findIndex(item => item === roomId);
+        if(index === -1)
+            setRoomData([...roomData, roomId])
+        else{
+            const temp = [...roomData]
+            temp.splice(index, 1)
+            setRoomData(temp)
+        }
+    }
 
+    const rooms = roomLists
+        .filter(item => item['room-active'] && !item['room-members'].includes(showModalOption.id))
+        .map((item, index) => 
+            <ModalRoom
+                key={index}
+                name={item['room-name']}
+                length={item['room-members'].length}
+                onClick={() => handleClickRoom(item['room-id'])}
+                active={roomData.includes(item['room-id'])}
+            />
+        )
+
+    const games = gameData.map((item, index) => 
+        <ModalListItem
+            key={index}
+            img={`./img/${item.iconImage}`}
+            onClick={() =>
+                {
+                    setShowAddGameModal(false)
+                    setShowAddRoomModal(true)
+                }
+            }
+        > {item.name} </ModalListItem>
+    )
     return (
         <>
             <div className='user'>
@@ -236,7 +258,6 @@ export default function Users() {
                 <Modal 
                     cancleModal={() =>
                         {
-                            setRooms([])
                             setShowModalOption({status: false, id: null})
                         }
                     }
@@ -260,18 +281,9 @@ export default function Users() {
                                 {
                                     setShowModalOption({...showModalOption, status: false});
                                     setShowAddGameModal(true);
-                                    setGames(
-                                        gameData.map((item, index) => 
-                                            <ModalListItem
-                                                key={index}
-                                                img={`./img/${item.iconImage}`}
-                                                // onClick={showRooms}
-                                            > {item.name} </ModalListItem>
-                                        )
-                                    )
                                 }
                             }
-                        > Add games </ModalListItem>
+                        > Add rooms </ModalListItem>
                         <ModalListItem
                             colorIcon='red'
                             icon='fas fa-trash-alt'
@@ -354,7 +366,7 @@ export default function Users() {
                             setShowModalOption({...showModalOption, status:true});
                         }
                     }
-                    // submitModal={handleSubmitAddRoomModal}
+                    submitModal={handleSubmitAddRoomModal}
                     header='Add Rooms'
                     cancleText='Cancle'
                     overlayCancle={false}
@@ -395,6 +407,7 @@ export default function Users() {
                 <Modal
                     header='Message'
                     acceptText='Okay!!!'
+                    btnClose={false}
                     submitModal={() => setIsSuccess({status: false, message: ''})}
                 >
                     <ModalMessage>

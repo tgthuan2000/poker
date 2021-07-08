@@ -99,7 +99,7 @@ const GameRooms = () =>  {
                 submitModal={handleSubmitAddRoom}
                 cancleModal={() => setAddRoom(false)}
                 header='Choose members'
-                cancleText={list.length > 0 && 'Cancle'}
+                cancleText={list.length >= 2 && 'Cancle'}
                 acceptText={data.length >= 2 && 'Create!'}
             >
                 {list.length >= 2 ? list :

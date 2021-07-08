@@ -154,11 +154,12 @@ export default function Users() {
                     </div>
                     }
                     {/* Hiển thị memberList*/}
-                    { members.length > 0 ?
+                    { members.length > 0 &&
                         <div className='user-list'>
                             {members}
                         </div>
-                        :
+                    }
+                    {memberList.length === 0 &&
                         <PageEmpty
                             text='Add member please!!!'
                             img='empty.png'

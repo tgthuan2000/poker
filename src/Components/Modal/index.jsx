@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '../Button'
 import './index.css'
 
-const Modal = ({ children, header, acceptText, cancleText, btnClose = true, cancleModal, submitModal }) => {
+const Modal = ({ children, header, acceptText, cancleText, btnClose = true, cancleModal, submitModal, overlayCancle = true }) => {
     return (
         <>
             <div className='modal'>
@@ -36,7 +36,11 @@ const Modal = ({ children, header, acceptText, cancleText, btnClose = true, canc
 
                 </div>
             </div>
-            <div className="overlay" onClick={cancleModal}></div>
+            {overlayCancle ? 
+                <div className="overlay" onClick={cancleModal} />
+                :
+                <div className="overlay" />
+            }
         </>
     )
 }
@@ -57,4 +61,18 @@ const ModalInput = ({children, onClick}) => (
     </div>
 )
 
-export { Modal, ModalList, ModalListItem, ModalInput }
+
+// Sử dụng thẻ <b> để highlight
+const ModalMessage = ({ children }) => (
+    <span className='modal-delete-message'>
+        {children}
+    </span>
+)
+
+const ModalComfirm = ({ children, height = '70px'}) => (
+    <div className="modal-confirm" style={{height:height}}>
+        {children}
+    </div>
+)
+
+export { Modal, ModalList, ModalListItem, ModalInput, ModalMessage, ModalComfirm }

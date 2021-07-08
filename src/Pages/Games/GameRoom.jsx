@@ -3,7 +3,7 @@ import './gameRoom.css'
 import { useParams } from 'react-router'
 import { Button, ButtonLink } from '../../Components/Button'
 import { gameData } from '../../Data'
-import { Modal } from '../../Components/Modal'
+import { Modal, ModalComfirm } from '../../Components/Modal'
 import { MemberModal } from '../../Components/Member'
 import { Room } from '../../Components/Room'
 import { randomString } from '../../Features'
@@ -17,8 +17,9 @@ const GameRooms = () =>  {
     const memberList = JSON.parse(localStorage.getItem('memberData')) || []
     const [roomList, setRoomList] = useState(JSON.parse(localStorage.getItem('pokerData')) || [])
     const [data, setData] = useState([])
+    const [enterRoom, setEnterRoom] = useState(false)
 
-    const handleClick = (id) => {
+    const handleClick = id => {
         const index = data.findIndex(item => item === id);
         if(index === -1)
             setData([...data, id])
@@ -35,6 +36,7 @@ const GameRooms = () =>  {
             name={item.name}
             color={item.color}
             onClick={() => handleClick(item.id)}
+            active={data.includes(item.id)}
         />
     )
     useEffect(() => {
@@ -50,17 +52,18 @@ const GameRooms = () =>  {
             {
                 'room-id': random,
                 'room-name': gameId + '_' + random,
-                'list-member-ids': data
+                'room-members': data,
             },
             ...roomList
         ])
+        setEnterRoom(true)
     }
 
     const rooms = roomList.map((item, index) => 
         <Room
             key={index}
             name={item['room-name']}
-            length={item['list-member-ids'].length}
+            length={item['room-members'].length}
             link={`./${gameId}/${item['room-id']}`}
         />
     )
@@ -84,8 +87,9 @@ const GameRooms = () =>  {
                 {rooms}
             </div>
             :
-            <PageEmpty 
+            <PageEmpty
                 text='Just add a new room!!!'
+                img='empty-room.png'
             />
             }
         </div>
@@ -98,12 +102,37 @@ const GameRooms = () =>  {
                 cancleText={list.length > 0 && 'Cancle'}
                 acceptText={data.length >= 2 && 'Create!'}
             >
-                {list.length > 0 ? list :
-                    <ButtonLink
-                        active
-                        link='/users'
-                    >Go to add member!</ButtonLink>
+                {list.length >= 2 ? list :
+                    <ModalComfirm height='35px'>
+                        <ButtonLink
+                            active
+                            link='/users'
+                            fullView
+                        >At least 2 members! Add more</ButtonLink>
+                    </ModalComfirm>
                 }
+            </Modal>
+        }
+
+        {enterRoom &&
+            <Modal
+                submitModal={handleSubmitAddRoom}
+                cancleModal={() => setEnterRoom(false)}
+                header='Enter Room Now!'
+                overlayCancle={false}
+                btnClose={false}
+                >
+                    <ModalComfirm>
+                        <Button
+                            onClick={() => setEnterRoom(false)}
+                            fullView
+                        >No</Button>
+                        <ButtonLink
+                            active
+                            fullView
+                            link={`./${gameId}/${roomList[0]['room-id']}`}
+                        >Yes</ButtonLink>
+                    </ModalComfirm>
             </Modal>
         }
         </>

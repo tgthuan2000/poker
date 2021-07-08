@@ -31,21 +31,3 @@
 .user-list{
     padding-top: 50px;
 }
-
-.modal-delete-message {
-    font-weight: 300;
-    font-size: 14px;
-    display: flex;
-    margin: 10px 0 10px 12px;
-}
-
-.modal-delete-message > b{
-    font-weight: 500;
-    padding: 0 5px;
-    max-width: 120px;
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: var(--primary-color);
-}

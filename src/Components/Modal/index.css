@@ -124,3 +124,31 @@
 .modal-input input:first-child{
     margin-top: 10px;
 }
+
+/* MODAL MESSAGE */
+.modal-delete-message {
+    font-weight: 300;
+    font-size: 14px;
+    display: flex;
+    margin: 10px 0 10px 12px;
+}
+
+.modal-delete-message > b{
+    font-weight: 500;
+    padding: 0 5px;
+    max-width: 120px;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--primary-color);
+}
+
+/* MODAL COMFIRM */
+.modal-confirm{
+    display: flex;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--primary-color);
+    overflow: hidden;
+    margin: 0 10px;
+}

@@ -3,7 +3,7 @@ import './index.css'
 import Member from '../../Components/Member'
 import { Button } from '../../Components/Button'
 import { Input } from '../../Components/Input'
-import { Modal, ModalInput, ModalList, ModalListItem } from '../../Components/Modal'
+import { Modal, ModalInput, ModalList, ModalListItem, ModalMessage } from '../../Components/Modal'
 import { filter, search, randomString, randomNumber} from '../../Features'
 import PageEmpty from '../../Components/PageEmpty'
 
@@ -199,6 +199,16 @@ export default function Users() {
                             }
                         > Delete </ModalListItem>
                         <ModalListItem
+                            colorIcon='indianred'
+                            icon='far fa-address-card'
+                            // onClick={}
+                        > Profile </ModalListItem>
+                        <ModalListItem
+                            colorIcon='indigo'
+                            icon='fas fa-trophy'
+                            // onClick={}
+                        > Achievements </ModalListItem>
+                        <ModalListItem
                             colorIcon='orange'
                             icon='fas fa-pencil-alt'
                             // onClick={}
@@ -248,10 +258,11 @@ export default function Users() {
                     header='Delete member'
                     cancleText='Cancle'
                     acceptText='Yes, I do!'
+                    overlayCancle={false}
                 >
-                    <span className='modal-delete-message'>
+                    <ModalMessage>
                         Do you want delete <b>{memberList.find(item => item.id === showModalOption.id)?.name}</b> ?
-                    </span>
+                    </ModalMessage>
                 </Modal>
             }
         </>

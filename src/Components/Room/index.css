@@ -13,9 +13,22 @@
     font-size: 18px;
     font-weight: 500;
     margin-bottom: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.room-desc{
+.room-wrapper{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+
+.room-wrapper:last-child{
+    margin-bottom: 0;
+}
+
+.room-wrapper span{
     font-weight: 300;
     font-size: 12px;
 }

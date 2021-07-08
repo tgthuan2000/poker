@@ -16,7 +16,7 @@ export default function Navbar() {
             name={item.name}
             path={item.path}
             onClick={() => setBugger(false)}
-            active={'/' + localtion.pathname.split('/')?.[1] === item.path}
+            active={'/' + localtion.pathname.split('/')[1] === item.path}
         >
             <i className={item.icon}></i>
         </NavLink>

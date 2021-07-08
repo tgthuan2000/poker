@@ -7,7 +7,7 @@ import { Modal, ModalInput, ModalList, ModalListItem, ModalMessage } from '../..
 import { filter, search, randomString, randomNumber} from '../../Features'
 import PageEmpty from '../../Components/PageEmpty'
 import { gameData } from '../../Data'
-import { ModalRoom } from '../../Components/Room'
+//import { ModalRoom } from '../../Components/Room'
 
 export default function Users() {
     // Khai báo state, ref, ...
@@ -30,7 +30,7 @@ export default function Users() {
     const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
     
     // Lấy dữ liệu room
-    const roomLists = JSON.parse(localStorage.getItem('pokerData')) || []
+    //const roomLists = JSON.parse(localStorage.getItem('pokerData')) || []
 
     // Copy memberList để tìm kiếm
     const [tempList,setTempList] = useState(memberList);

@@ -19,13 +19,13 @@ const NavbarGame = ({ gameId, roomId }) => {
     const [message,setMessage] = useState({status: false, message: ''})
 
     useEffect(() => {
-        const temp = [...roomList]
-        temp.splice(indexRoom,1,currentRoom)
-        setRoomList(temp)
+        const rooms = JSON.parse(localStorage.getItem('pokerData'))
+        rooms.splice(indexRoom , 1, currentRoom)
+        setRoomList(rooms)
         setAddMemberModal(false)
         setNewMemberData([])
         setEndGameModal(false)
-    }, [currentRoom]);
+    }, [currentRoom, indexRoom]);
 
     useEffect(() => {
         localStorage.setItem('pokerData',JSON.stringify(roomList))
@@ -87,7 +87,7 @@ const NavbarGame = ({ gameId, roomId }) => {
                     <img src={`../../img/${game.iconImage}`} alt=" "/>
                     <span>{game.name}</span>
                 </Link>
-                {currentRoom['room-status'] ?
+                {currentRoom['room-active'] ?
                     <div className={`navGame-right${option ? ' active': ''}`} onClick={() => setOption(!option)}>
                         <i className="fab fa-optin-monster"></i>
                         {option &&

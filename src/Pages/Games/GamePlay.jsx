@@ -14,7 +14,7 @@ const GamePlay = () =>  {
             default:
                 break;
         }
-    }, [])
+    }, [roomId, gameId])
     return (
         <div className='GamePlay'>
             <NavbarGame

@@ -69,7 +69,7 @@ const ModalInput = ({children, onClick}) => (
 
 // Sử dụng thẻ <b> để highlight
 const ModalMessage = ({ children }) => (
-    <span className='modal-delete-message'>
+    <span className='modal-message'>
         {children}
     </span>
 )

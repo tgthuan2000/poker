@@ -22,7 +22,7 @@ export default function Users() {
     const [roomData, setRoomData] = useState([])
     const inputValue = useRef()
     const renameInputValue = useRef()
-    const [isSuccess, setIsSuccess] = useState({status: false, message: ''})
+    const [message, setMessage] = useState({status: false, message: ''})
 
     // Nhận dữ liệu từ localStorage và truyền vào state
     const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
@@ -89,7 +89,7 @@ export default function Users() {
             if(item.id === showModalOption.id) item.name = renameInputValue.current.value.trim()
         })
         setMemberList(newList)
-        setIsSuccess(
+        setMessage(
             {
                 status: true,
                 message: 'Rename success!!!'
@@ -114,7 +114,7 @@ export default function Users() {
         })
         localStorage.setItem('pokerData', JSON.stringify(tempRoomLists))
 
-        setIsSuccess(
+        setMessage(
             {
                 status: true,
                 message: 'Delete success!!!'
@@ -149,7 +149,7 @@ export default function Users() {
         setShowModalOption({status: false, id: null})
         setShowAddRoomModal(false)
         setRoomData([])
-        setIsSuccess(
+        setMessage(
             {
                 status: true,
                 message: 'Add room(s) success!!'
@@ -403,15 +403,15 @@ export default function Users() {
             }
 
             {/* Hiện status */}
-            {isSuccess.status &&
+            {message.status &&
                 <Modal
                     header='Message'
                     acceptText='Okay!!!'
                     btnClose={false}
-                    submitModal={() => setIsSuccess({status: false, message: ''})}
+                    submitModal={() => setMessage({status: false, message: ''})}
                 >
                     <ModalMessage>
-                        {isSuccess.message}
+                        {message.message}
                     </ModalMessage>
                 </Modal>
             }

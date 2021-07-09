@@ -56,6 +56,10 @@ const GameRooms = () =>  {
                 'room-members': data,
                 'room-create-at': dateTime,
                 'room-active': true,
+                'room-rounds': [],
+                'room-hidden-members': [],
+                'room-total-score': [],
+
             },
             ...roomList
         ])

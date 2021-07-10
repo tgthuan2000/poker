@@ -5,16 +5,15 @@ import { Link } from 'react-router-dom'
 import { Modal, ModalMessage } from '../../../Components/Modal'
 import { MemberModal } from '../../../Components/Member'
 
-const NavbarGame = ({ gameId, roomId }) => {
+const NavbarGame = ({ gameId, indexRoom }) => {
     const game = gameData.find(item => item.id === gameId)
-    const [option,setOption] = useState(false)
-    const [addMemberModal, setAddMemberModal] = useState(false)
     const [roomList,setRoomList] = useState(getLocalStorage(gameId))
-    const indexRoom = roomList.findIndex(item => item['room-id'] === roomId)
     const [currentRoom, setCurrentRoom] = useState(roomList[indexRoom])
     const otherMembers = getLocalStorage('member')
         .filter(({id}) => !currentRoom['room-members'].includes(id))
+    const [option,setOption] = useState(false)
     const [newMemberData, setNewMemberData] = useState([])
+    const [addMemberModal, setAddMemberModal] = useState(false)
     const [endGameModal, setEndGameModal] = useState(false)
     const [message,setMessage] = useState({status: false, message: ''})
 

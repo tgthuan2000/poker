@@ -1,14 +1,29 @@
 .navGame {
-  height: var(--navbar-height-gamePage);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: nowrap;
   padding: 0 10px;
   background-color: var(--primary-color);
+  height: var(--navbar-height-gamePage);
+  transition: transform 0.3s ease;
 }
 
-.navGame-left {
+.navGame.active,
+.navGame.active + .poker {
+  transform: translateY(0);
+}
+
+.navGame.hidden,
+.navGame.hidden + .poker {
+  transform: translateY(-64px);
+}
+
+.navGame.hidden + .poker {
+  min-height: 100vh;
+}
+
+.navGame-right {
   display: flex;
   align-items: center;
   padding: 8px;
@@ -18,26 +33,26 @@
   color: var(--secondary-color);
 }
 
-.navGame-left > span {
+.navGame-right > span {
   margin-left: 10px;
 }
 
-.navGame-center {
+.navGame-left {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   padding: 0 10px;
   cursor: pointer;
   text-decoration: none;
 }
 
-.navGame-center > span {
+.navGame-left > span {
   font-weight: 500;
   margin-left: 10px;
   color: var(--secondary-color);
   user-select: none;
-  font-size: 20px;
+  font-size: 28px;
 }
 
-.navGame-center > img {
+.navGame-left > img {
   width: 50px;
 }

@@ -1,63 +1,63 @@
-.member{
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    margin-bottom: 10px;
-    --member-height: 50px;
-    user-select: none;
-    transition: background .3s ease;
-    border-radius: var(--border-radius);
+.member {
+  display: flex;
+  align-items: center;
+  padding: 5px 20px;
+  margin-bottom: 10px;
+  --member-height: 50px;
+  user-select: none;
+  transition: background 0.3s ease;
+  border-radius: var(--border-radius);
 }
 
-.member:last-child{
-    margin-bottom: 0px;
+.member:last-child {
+  margin-bottom: 0px;
 }
 
-.member-avatar{
-    border-radius: 50%;
-    height: var(--member-height);
-    width: var(--member-height);
-    margin-right: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    font-weight: 600;
-    text-transform: uppercase;
+.member-avatar {
+  border-radius: 50%;
+  height: var(--member-height);
+  width: var(--member-height);
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
-.member-name{
-    font-size: 18px;
-    font-weight: 500;
-    max-height: var(--member-height);
-    line-height: calc(var(--member-height) / 2);
-    flex: 1;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+.member-name {
+  font-size: 18px;
+  font-weight: 500;
+  max-height: var(--member-height);
+  line-height: calc(var(--member-height) / 2);
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
-.member-option{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 6px 14px;
-    cursor: pointer;
+.member-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 14px;
+  cursor: pointer;
 }
 
-.member-checkbox{
-    cursor: pointer;
+.member-checkbox {
+  cursor: pointer;
 }
 
-.member-modal{
-    cursor: pointer;
+.member-modal {
+  cursor: pointer;
 }
 
-.member-checked{
-    background: rgba(241, 187, 223, 0.5);
+.member-checked {
+  background: rgba(241, 187, 223, 0.5);
 }
 
-.member-icon{
-    color: var(--primary-color);
+.member-icon {
+  color: var(--primary-color);
 }

@@ -6,21 +6,16 @@
   padding: 0 10px;
   background-color: var(--primary-color);
   height: var(--navbar-height-gamePage);
-  transition: transform 0.3s ease;
+  transition: margin-top 0.3s ease;
+  will-change: margin-top;
+  margin-top: -64px;
+}
+.navGame.active {
+  margin-top: 0;
 }
 
-.navGame.active,
 .navGame.active + .poker {
-  transform: translateY(0);
-}
-
-.navGame.hidden,
-.navGame.hidden + .poker {
-  transform: translateY(-64px);
-}
-
-.navGame.hidden + .poker {
-  min-height: 100vh;
+  min-height: calc(100vh - var(--navbar-height-gamePage));
 }
 
 .navGame-right {

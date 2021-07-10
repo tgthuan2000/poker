@@ -11,7 +11,7 @@ const NavbarGame = () => {
     const game = gameData.find(item => item.id === gameId)
 
     return (
-        <div className={`navGame ${slug === 'home' ? 'active' : 'hidden'}`}>
+        <div className={`navGame ${slug === 'home' ? 'active' : ''}`}>
             <Link to='../../../games' className="navGame-left">
                 <img src={`../../../img/${game.iconImage}`} alt=" "/>
                 <span>{game.name}</span>

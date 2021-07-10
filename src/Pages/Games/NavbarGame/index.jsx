@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './index.css'
-import { gameData } from '../../../Data'
+import { gameData, getLocalStorage, setLocalStorage } from '../../../Data'
 import { Link } from 'react-router-dom'
 import { Modal, ModalMessage } from '../../../Components/Modal'
 import { MemberModal } from '../../../Components/Member'
@@ -9,27 +9,27 @@ const NavbarGame = ({ gameId, roomId }) => {
     const game = gameData.find(item => item.id === gameId)
     const [option,setOption] = useState(false)
     const [addMemberModal, setAddMemberModal] = useState(false)
-    const [roomList,setRoomList] = useState(JSON.parse(localStorage.getItem('pokerData')))
+    const [roomList,setRoomList] = useState(getLocalStorage(gameId))
     const indexRoom = roomList.findIndex(item => item['room-id'] === roomId)
     const [currentRoom, setCurrentRoom] = useState(roomList[indexRoom])
-    const otherMembers = JSON.parse(localStorage.getItem('memberData'))
+    const otherMembers = getLocalStorage('member')
         .filter(({id}) => !currentRoom['room-members'].includes(id))
     const [newMemberData, setNewMemberData] = useState([])
     const [endGameModal, setEndGameModal] = useState(false)
     const [message,setMessage] = useState({status: false, message: ''})
 
     useEffect(() => {
-        const rooms = JSON.parse(localStorage.getItem('pokerData'))
+        const rooms = getLocalStorage(gameId)
         rooms.splice(indexRoom , 1, currentRoom)
         setRoomList(rooms)
         setAddMemberModal(false)
         setNewMemberData([])
         setEndGameModal(false)
-    }, [currentRoom, indexRoom]);
+    }, [currentRoom, indexRoom, gameId]);
 
     useEffect(() => {
-        localStorage.setItem('pokerData',JSON.stringify(roomList))
-    }, [roomList]);
+        setLocalStorage(gameId+'Data', roomList)
+    }, [roomList, gameId]);
 
     const list = otherMembers.map((item, index) => 
         <MemberModal
@@ -98,7 +98,7 @@ const NavbarGame = ({ gameId, roomId }) => {
                                 </li>
                                 <li className="navGame-option-item" onClick={() => setEndGameModal(true)}>
                                     <img src={`../../img/${game.iconImage}`} alt=" "/>
-                                    <span>End game - block</span>
+                                    <span>End game!!!</span>
                                 </li>
                             </ul>
                         }

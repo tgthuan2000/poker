@@ -39,6 +39,7 @@
   margin-left: 10px;
   color: var(--secondary-color);
   user-select: none;
+  font-size: 20px;
 }
 
 .navGame-center > img {

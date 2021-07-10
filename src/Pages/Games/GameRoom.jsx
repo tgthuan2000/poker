@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './gameRoom.css'
 import { useParams } from 'react-router'
 import { Button, ButtonLink } from '../../Components/Button'
-import { gameData } from '../../Data'
+import { gameData, getLocalStorage, setLocalStorage } from '../../Data'
 import { Modal, ModalComfirm } from '../../Components/Modal'
 import { MemberModal } from '../../Components/Member'
 import { Room } from '../../Components/Room'
@@ -14,8 +14,8 @@ const GameRooms = () =>  {
     let { gameId } = useParams()
     const game = gameData.find(game => game.id === gameId)
     const [addRoom, setAddRoom] = useState(false)
-    const memberList = JSON.parse(localStorage.getItem('memberData')) || []
-    const [roomList, setRoomList] = useState(JSON.parse(localStorage.getItem('pokerData')) || [])
+    const memberList = getLocalStorage('member')
+    const [roomList, setRoomList] = useState(getLocalStorage(gameId))
     const [data, setData] = useState([])
     const [enterRoom, setEnterRoom] = useState(false)
 
@@ -40,11 +40,11 @@ const GameRooms = () =>  {
         />
     )
     useEffect(() => {
-        localStorage.setItem('pokerData', JSON.stringify(roomList))
+        setLocalStorage(gameId+'Data', roomList)
         // refresh state
         setAddRoom(false)
         setData([])
-    },[ roomList ])
+    },[ roomList, gameId])
 
     const handleSubmitAddRoom = () => {
         const dateTime = getDateTime()

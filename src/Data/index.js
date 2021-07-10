@@ -28,4 +28,20 @@ const gameData =
             iconImage: 'poker-cards.png',
         },
     ]
-export { NavbarMenu, gameData }
+
+const getLocalStorage = (value) => {
+    switch (value) {
+        case 'member': return JSON.parse(localStorage.getItem('memberData')) || []
+        case 'poker': return JSON.parse(localStorage.getItem('pokerData')) || []
+        default: return [];
+    }
+}
+
+const setLocalStorage = (input, value) => {
+    switch (input) {
+        case 'memberData': return localStorage.setItem('memberData', JSON.stringify(value))
+        case 'pokerData': return localStorage.setItem('pokerData', JSON.stringify(value))
+        default: break;
+    }
+}
+export { NavbarMenu, gameData, getLocalStorage, setLocalStorage }

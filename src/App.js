@@ -4,7 +4,8 @@ import Navbar from './Components/Navbar'
 import Home from './Pages/Home'
 import Games from './Pages/Games';
 import GameRooms from './Pages/Games/GameRoom.jsx';
-import GamePlay from './Pages/Games/GamePlay.jsx';
+import Poker from './Pages/Games/Poker';
+import NavbarGame from './Pages/Games/NavbarGame';
 import Users from './Pages/Users';
 
 function App() {
@@ -36,8 +37,11 @@ function App() {
               <GameRooms/>
             </div>
           </Route>
-          <Route path='/games/:gameId/:roomId' exact>
-            <GamePlay/>
+          <Route path='/games/poker/:roomId/:slug' exact>
+            <NavbarGame />
+            {/* <div className="game-zone"> */}
+              <Poker/>
+            {/* </div> */}
           </Route>
         </Switch>
       </div>

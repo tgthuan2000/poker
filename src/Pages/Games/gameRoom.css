@@ -1,25 +1,21 @@
-.game-room{
-    padding: 0 10px;
+.game-room-header {
+  display: flex;
+  padding: 10px 14px;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  background: var(--secondary-color);
+  width: calc(100% - var(--navbar-width));
+  height: 50px;
 }
 
-.game-room-header{
-    display: flex;
-    padding: 10px 4px;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    background: #fff;
-    width: calc( 100% - var(--navbar-width) - 20px);
-    height: 50px;
+.game-name {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--primary-color);
 }
 
-.game-name{
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 20px;
-    color: var(--primary-color);
-}
-
-.game-room-list{
-    padding-top: 60px;
+.game-room-list {
+  padding: 60px 10px 0;
 }

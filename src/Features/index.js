@@ -34,7 +34,7 @@ export const randomNumber = () => {
 export const getDateTime = () => {
     const today = new Date();
     const formatDateTime = (element) => {
-        return element.toString().length === 2 ? element : `0${element}`
+        return `0${element}`.slice(-2)
     }
     const hours = formatDateTime(today.getHours())
     const minute = formatDateTime(today.getMinutes())

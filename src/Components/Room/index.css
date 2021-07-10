@@ -1,61 +1,62 @@
-.room{
-    text-decoration: none;
-    color: #555;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 0 2px var(--primary-color);
-    margin-bottom: 15px;
-    cursor: pointer;
+.room {
+  text-decoration: none;
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 2px var(--primary-color);
+  margin-bottom: 15px;
+  cursor: pointer;
+  background-color: var(--secondary-color);
 }
 
-.room-modal{
-    margin: 12px 0;
-    border-radius: 5px;
-    user-select: none;
+.room-modal {
+  margin: 12px 0;
+  border-radius: 5px;
+  user-select: none;
 }
 
-.room-modal.active{
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    opacity: .9;
+.room-modal.active {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  opacity: 0.9;
 }
 
-.room-name{
-    font-size: 18px;
-    font-weight: 500;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin-right: 5px;
+.room-name {
+  font-size: 18px;
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 5px;
 }
 
-.room-status{
-    font-weight: 600;
-    font-size: 12px;
-    color: var(--secondary-color);
-    background-color: gray;
-    border-radius: 5px;
-    padding: 3px 7px;
+.room-status {
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--secondary-color);
+  background-color: gray;
+  border-radius: 5px;
+  padding: 3px 7px;
 }
 
-.room.active .room-status{
-    background-color: green;
+.room.active .room-status {
+  background-color: green;
 }
 
-.room-wrapper{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 3px;
+.room-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3px;
 }
 
-.room-wrapper:last-child{
-    margin-bottom: 0;
+.room-wrapper:last-child {
+  margin-bottom: 0;
 }
 
-.room-wrapper span{
-    font-weight: 300;
-    font-size: 12px;
+.room-wrapper span {
+  font-weight: 300;
+  font-size: 12px;
 }

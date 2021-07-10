@@ -1,4 +1,4 @@
-:root{
+:root {
   --screen-width: 100%;
   --navbar-width: 70px;
   --primary-color: rgb(133, 4, 126);
@@ -6,18 +6,21 @@
   --border-radius: 8px;
   --btnIcon-size: 40px;
   --navbar-openSize: 250px;
+  --navbar-height-gamePage: 64px;
+  --navbar-sub-poker: 50px;
+  --wash-page: #f0f2f5;
 }
 
 @keyframes slideShow {
-  from{
+  from {
     opacity: 0;
   }
-  to{
+  to {
     opacity: 1;
   }
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -25,28 +28,31 @@
   -ms-overflow-style: none;
 }
 
-html{
-  font-family: 'Roboto',sans-serif;
+html {
+  font-family: "Roboto", sans-serif;
 }
 
-.App{
+body {
+  background-color: var(--wash-page);
+}
+
+.App {
   background-color: var(--background-color);
   margin: auto;
   width: var(--screen-width);
   height: 100vh;
-  border: 1px solid #ccc;
   overflow-y: scroll;
   overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   display: none;
 }
 
-.app-wrap{
+.app-wrap {
   margin-left: var(--navbar-width);
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   width: calc(var(--screen-width) - var(--navbar-width));
 }

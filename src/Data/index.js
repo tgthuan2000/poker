@@ -29,6 +29,27 @@ const gameData =
         },
     ]
 
+const pokerConfig = {
+    navbar: [
+        {
+            link: 'home',
+            icon: 'fas fa-home',
+        },
+        {
+            link: 'gameplay',
+            icon: 'fas fa-gamepad',
+        },
+        {
+            link: 'history',
+            icon: 'fas fa-history',
+        },
+        {
+            link: 'member-config',
+            icon: 'fas fa-users-cog',
+        },
+    ],
+}
+
 const getLocalStorage = (value) => {
     switch (value) {
         case 'member': return JSON.parse(localStorage.getItem('memberData')) || []
@@ -44,4 +65,4 @@ const setLocalStorage = (input, value) => {
         default: break;
     }
 }
-export { NavbarMenu, gameData, getLocalStorage, setLocalStorage }
+export { NavbarMenu, gameData, getLocalStorage, setLocalStorage, pokerConfig }

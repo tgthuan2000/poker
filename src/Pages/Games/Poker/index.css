@@ -1,0 +1,27 @@
+.poker-nav {
+  padding: 0 10px;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  list-style: none;
+  position: sticky;
+  top: 0;
+  height: var(--navbar-sub-poker);
+}
+.poker-nav-link {
+  padding: 7px 20px;
+  text-decoration: none;
+  color: var(--secondary-color);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.poker-nav-link.active {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.poker-wrap {
+  padding: 10px;
+  height: calc(100vh - var(--navbar-height-gamePage) - var(--navbar-sub-poker));
+}

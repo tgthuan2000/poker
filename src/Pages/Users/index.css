@@ -1,33 +1,30 @@
-.user{
-    padding: 0 10px;
+.user-header {
+  display: flex;
+  padding: 10px 14px;
+  align-items: center;
+  justify-content: flex-end;
+  position: fixed;
+  background: var(--secondary-color);
+  width: calc(100% - var(--navbar-width));
+  height: 50px;
 }
 
-.user-header{
-    display: flex;
-    padding: 10px 4px;
-    align-items: center;
-    justify-content: flex-end;
-    position: fixed;
-    background: #fff;
-    width: calc( 100% - var(--navbar-width) - 20px);
-    height: 50px;
+.user-header-temp {
+  display: flex;
+  padding: 10px 14px;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  background: var(--secondary-color);
+  width: calc(100% - var(--navbar-width));
+  height: 50px;
 }
 
-.user-header-temp{
-    display: flex;
-    padding: 10px 4px;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    background: #fff;
-    width: calc( 100% - var(--navbar-width) - 20px);
-    height: 50px;
+.user-header-input {
+  margin-right: 14px;
+  background-color: transparent;
 }
 
-.user-header-input{
-    margin-right: 14px;
-}
-
-.user-list{
-    padding-top: 50px;
+.user-list {
+  padding-top: 50px;
 }

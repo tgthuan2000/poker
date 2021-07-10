@@ -73,7 +73,7 @@ const GameRooms = () =>  {
             length={item['room-members'].length}
             createAt={item['room-create-at']}
             active={item['room-active']}
-            link={`./${gameId}/${item['room-id']}`}
+            link={`./${gameId}/${item['room-id']}/home`}
         />
     )
     return (
@@ -141,7 +141,7 @@ const GameRooms = () =>  {
                         <ButtonLink
                             active
                             fullView
-                            link={`./${gameId}/${roomList[0]['room-id']}`}
+                            link={`./${gameId}/${roomList[0]['room-id']}/home`}
                         >Yes</ButtonLink>
                     </ModalComfirm>
             </Modal>

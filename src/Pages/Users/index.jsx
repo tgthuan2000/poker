@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef,useMemo, useCallback } from 'react'
 import './index.css'
 import Member from '../../Components/Member'
 import { Button } from '../../Components/Button'
@@ -13,12 +13,14 @@ export default function Users() {
     // Khai báo state, ref, ...
     const [check,setCheck] = useState(false);
     const [showAddMemberBtn,setShowAddMemberBtn] = useState(false)
-    const [showModalOption, setShowModalOption] = useState({ status: false, id: null })
+    const [showModalOption, setShowModalOption] = useState(false)
+    const [valueOption, setValueOption] = useState('')
     const [showRenameModal,setShowRenameModal] = useState(false)
     const [acceptRename,setAcceptRename] = useState(false)
     const [showDeleteModal,setShowDeleteModal] = useState(false)
     const [showAddGameModal, setShowAddGameModal] = useState(false)
     const [showAddRoomModal, setShowAddRoomModal] = useState(false)
+    const [game, setGame] = useState('')
     const [roomData, setRoomData] = useState([])
     const inputValue = useRef()
     const renameInputValue = useRef()
@@ -28,7 +30,7 @@ export default function Users() {
     const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
     
     // Lấy dữ liệu room
-    const roomLists = JSON.parse(localStorage.getItem('pokerData')) || []
+    const roomLists = useMemo(() => JSON.parse(localStorage.getItem('pokerData')) || [], [])
 
     // Copy memberList để tìm kiếm
     const [tempList,setTempList] = useState(memberList);
@@ -40,9 +42,9 @@ export default function Users() {
         // refresh all sate
         setCheck(false)
         setShowAddMemberBtn(false)
-        setShowModalOption({ status: false, id: null })
+        setShowModalOption(false)
+        setValueOption('')
         setShowRenameModal(false)
-        setAcceptRename(false)
         setShowDeleteModal(false)
         inputValue.current = null
         renameInputValue.current = null
@@ -50,14 +52,14 @@ export default function Users() {
     }, [memberList]);
     
     // Duyệt copyList để render view
-    const members = tempList.map((item, index) =>
+    const members = useMemo(() => tempList.map((item, index) => 
         <Member
             key={index}
             name={item.name}
             color={item.color}
-            optionClick={() => setShowModalOption({ status: true, id: item.id })}
+            optionClick={() => {setShowModalOption(true); setValueOption(item.id)}}
         />
-    );
+    ), [tempList]);
 
     // Feature tìm kiếm, lọc member
     const handleOnInput = () => {
@@ -86,9 +88,10 @@ export default function Users() {
     const handleSubmitRenameModal = () => {
         const newList = [...memberList]
         newList.forEach(item => {
-            if(item.id === showModalOption.id) item.name = renameInputValue.current.value.trim()
+            if(item.id === valueOption) item.name = renameInputValue.current.value.trim()
         })
         setMemberList(newList)
+        setAcceptRename(false)
         setMessage(
             {
                 status: true,
@@ -101,14 +104,14 @@ export default function Users() {
     const handleSubmitDeleteModal = () => {
         const newList = [...memberList]
         newList.splice(
-            newList.findIndex(item => item.id === showModalOption.id),
+            newList.findIndex(item => item.id === valueOption),
             1
         )
         setMemberList(newList)
 
         const tempRoomLists = [...roomLists]
         tempRoomLists.forEach(item => {
-            let index = item['room-members'].indexOf(showModalOption.id)
+            let index = item['room-members'].indexOf(valueOption)
             if(index !== -1)
                 item['room-members'].splice(index,1)
         })
@@ -143,10 +146,11 @@ export default function Users() {
         const tempRoomLists = [...roomLists]
         tempRoomLists.forEach(item => {
             if(roomData.includes(item['room-id']))
-                item['room-members'].push(showModalOption.id)
+                item['room-members'].push(valueOption)
         })
-        localStorage.setItem('pokerData', JSON.stringify(tempRoomLists))
-        setShowModalOption({status: false, id: null})
+        localStorage.setItem(game+'Data', JSON.stringify(tempRoomLists))
+        setGame('')
+        setValueOption('')
         setShowAddRoomModal(false)
         setRoomData([])
         setMessage(
@@ -157,7 +161,7 @@ export default function Users() {
         )
     }
 
-    const handleClickRoom = roomId => {
+    const handleClickRoom = useCallback(roomId => {
         const index = roomData.findIndex(item => item === roomId);
         if(index === -1)
             setRoomData([...roomData, roomId])
@@ -166,10 +170,10 @@ export default function Users() {
             temp.splice(index, 1)
             setRoomData(temp)
         }
-    }
+    }, [roomData])
 
-    const rooms = roomLists
-        .filter(item => item['room-active'] && !item['room-members'].includes(showModalOption.id))
+    const rooms = useMemo(() => roomLists
+        .filter(item => item['room-active'] && !item['room-members'].includes(valueOption))
         .map((item, index) => 
             <ModalRoom
                 key={index}
@@ -178,9 +182,9 @@ export default function Users() {
                 onClick={() => handleClickRoom(item['room-id'])}
                 active={roomData.includes(item['room-id'])}
             />
-        )
+    ), [ valueOption, roomData, roomLists, handleClickRoom ])
 
-    const games = gameData.map((item, index) => 
+    const games = useMemo(() => gameData.map((item, index) => 
         <ModalListItem
             key={index}
             img={`./img/${item.iconImage}`}
@@ -188,10 +192,11 @@ export default function Users() {
                 {
                     setShowAddGameModal(false)
                     setShowAddRoomModal(true)
+                    setGame(item.id)
                 }
             }
         > {item.name} </ModalListItem>
-    )
+    ),[])
     return (
         <>
             <div className='user'>
@@ -254,11 +259,12 @@ export default function Users() {
             </div>
 
             {/* Hiển thị modal option (3 chấm) */}
-            {showModalOption.status &&
+            {showModalOption &&
                 <Modal 
                     cancleModal={() =>
                         {
-                            setShowModalOption({status: false, id: null})
+                            setShowModalOption(false)
+                            setValueOption('')
                         }
                     }
                     header='My option'
@@ -269,7 +275,7 @@ export default function Users() {
                             icon='fas fa-signature'
                             onClick={() =>
                                 {
-                                    setShowModalOption({...showModalOption, status: false});
+                                    setShowModalOption(false)
                                     setShowRenameModal(true);
                                 }
                             }
@@ -279,7 +285,7 @@ export default function Users() {
                             icon='fas fa-gamepad'
                             onClick={() => 
                                 {
-                                    setShowModalOption({...showModalOption, status: false});
+                                    setShowModalOption(false)
                                     setShowAddGameModal(true);
                                 }
                             }
@@ -289,7 +295,7 @@ export default function Users() {
                             icon='fas fa-trash-alt'
                             onClick={() =>
                                 {
-                                    setShowModalOption({...showModalOption, status: false});
+                                    setShowModalOption(false)
                                     setShowDeleteModal(true)
                                 }
                             }
@@ -319,7 +325,7 @@ export default function Users() {
                     cancleModal={() =>
                         {
                             setShowRenameModal(false);
-                            setShowModalOption({...showModalOption, status:true});
+                            setShowModalOption(true);
                             setAcceptRename(false)
                         }
                     }
@@ -397,7 +403,7 @@ export default function Users() {
                     overlayCancle={false}
                 >
                     <ModalMessage>
-                        Do you want delete <b>{memberList.find(item => item.id === showModalOption.id)?.name}</b> ?
+                        Do you want delete <b>{memberList.find(item => item.id === valueOption)?.name}</b> ?
                     </ModalMessage>
                 </Modal>
             }

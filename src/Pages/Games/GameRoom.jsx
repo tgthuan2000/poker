@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import './gameRoom.css'
 import { useParams } from 'react-router'
 import { Button, ButtonLink } from '../../Components/Button'
@@ -11,15 +11,14 @@ import PageEmpty from '../../Components/PageEmpty'
 
 
 const GameRooms = () =>  {
-    let { gameId } = useParams()
+    const { gameId } = useParams()
     const game = gameData.find(game => game.id === gameId)
     const [addRoom, setAddRoom] = useState(false)
-    const memberList = getLocalStorage('member')
     const [roomList, setRoomList] = useState(getLocalStorage(gameId))
     const [data, setData] = useState([])
     const [enterRoom, setEnterRoom] = useState(false)
 
-    const handleClick = id => {
+    const handleClick = useCallback(id => {
         const index = data.findIndex(item => item === id);
         if(index === -1)
             setData([...data, id])
@@ -28,9 +27,9 @@ const GameRooms = () =>  {
             temp.splice(index, 1)
             setData(temp)
         }
-    }
+    }, [data])
 
-    const list = memberList.map((item, index) => 
+    const list = useMemo(() => getLocalStorage('member').map((item, index) => 
         <MemberModal
             key={index}
             name={item.name}
@@ -38,7 +37,7 @@ const GameRooms = () =>  {
             onClick={() => handleClick(item.id)}
             active={data.includes(item.id)}
         />
-    )
+    ), [ data, handleClick ])
     useEffect(() => {
         setLocalStorage(gameId+'Data', roomList)
         // refresh state
@@ -66,7 +65,7 @@ const GameRooms = () =>  {
         setEnterRoom(true)
     }
 
-    const rooms = roomList.map((item, index) => 
+    const rooms = useMemo(() => roomList.map((item, index) => 
         <Room
             key={index}
             name={item['room-name']}
@@ -75,7 +74,7 @@ const GameRooms = () =>  {
             active={item['room-active']}
             link={`./${gameId}/${item['room-id']}/home`}
         />
-    )
+    ), [roomList, gameId])
     return (
         <>
         <div className='game-room'>

@@ -7,12 +7,13 @@ import Home from './Home'
 import History from './History'
 import MemberConfig from './MemberConfig'
 import Gameplay from './Gameplay'
+import {getLocalStorage} from '../../../Data'
 
 const Poker = () =>  {
-    const { slug } = useParams()
-    // const KEY_GAME = 'poker'
-    // const [data, setData] = useState([])
-    // const indexRoom = getLocalStorage(KEY_GAME).findIndex(item => item['room-id'] === roomId)
+    const { roomId, slug } = useParams()
+    const KEY_GAME = 'poker'
+    const indexRoom = getLocalStorage(KEY_GAME).findIndex(item => item['room-id'] === roomId)
+    const currentRoom = getLocalStorage(KEY_GAME)[indexRoom]
 
     const navbar = pokerConfig.navbar.map((item, index) => 
         <Link to={`./${item.link}`} className={`poker-nav-link${slug === item.link ? ' active' : ''}`} key={index}>
@@ -33,7 +34,11 @@ const Poker = () =>  {
                     <History></History>
                 }
                 {slug === 'member-config' &&
-                    <MemberConfig></MemberConfig>
+                    <MemberConfig 
+                        gameId={KEY_GAME}
+                        currentRoom={currentRoom}
+                        indexRoom={indexRoom}
+                    />
                 }
                 {slug === 'gameplay' &&
                     <Gameplay></Gameplay>

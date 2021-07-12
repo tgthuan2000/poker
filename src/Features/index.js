@@ -1,3 +1,5 @@
+import { getLocalStorage, setLocalStorage } from "../Data"
+
 export const search = (arrayList, refValue, element) => {
     const check = arrayList.find(item => 
         item[element].toLowerCase() === refValue.current.value.toLowerCase().trim()
@@ -42,4 +44,11 @@ export const getDateTime = () => {
     const date = formatDateTime(today.getDate())
     const month = formatDateTime(today.getMonth()+1)
     return hours + ":" + minute + ":" + second + " - " + date + '/' + month + '/' + today.getFullYear();
+}
+
+export const updateLocalStorage = (gameId, indexRoom, room) => {
+    // update localStorage
+    const localStorage = getLocalStorage(gameId)
+    localStorage.splice(indexRoom, 1, room)
+    setLocalStorage(gameId+'Data', localStorage)
 }

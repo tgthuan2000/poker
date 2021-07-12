@@ -9,6 +9,7 @@
   transition: margin-top 0.3s ease;
   will-change: margin-top;
   margin-top: -64px;
+  animation: topToBottom 0.3s ease;
 }
 .navGame.active {
   margin-top: 0;

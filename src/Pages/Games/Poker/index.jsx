@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.css'
-import { useParams } from 'react-router'
-import { pokerConfig } from '../../../Data'
+import { useLocation, useParams } from 'react-router'
+import { pokerConfig, setLocalStorage } from '../../../Data'
 import { Link } from 'react-router-dom'
 import Home from './Home'
 import History from './History'
@@ -10,6 +10,8 @@ import Gameplay from './Gameplay'
 import {getLocalStorage} from '../../../Data'
 
 const Poker = () =>  {
+    const localtion =  useLocation()
+    setLocalStorage('nowData',{status: true, link: localtion.pathname})
     const { roomId, slug } = useParams()
     const KEY_GAME = 'poker'
     const indexRoom = getLocalStorage(KEY_GAME).findIndex(item => item['room-id'] === roomId)
@@ -41,11 +43,36 @@ const Poker = () =>  {
                     />
                 }
                 {slug === 'gameplay' &&
-                    <Gameplay></Gameplay>
+                    <Gameplay
+                        gameId={KEY_GAME}
+                        currentRoom={currentRoom}
+                        indexRoom={indexRoom}
+                    />
                 }
             </div>
         </div>
     )
 }
+
+export const PokerHeader = ({ headerText, children }) => (
+    <div className="poker-header">
+        <h4> {headerText} </h4>
+        <div className="poker-header-wrap">
+            {children}
+        </div>
+    </div>
+)
+
+export const PokerBody = ({children}) => (
+    <div className="poker-body">
+        {children}
+    </div>
+)
+
+export const PokerDesc = ({children}) => (
+    <div className="poker-description">
+        {children}
+    </div>
+)
 
 export default Poker

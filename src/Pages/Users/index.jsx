@@ -6,7 +6,7 @@ import { Input } from '../../Components/Input'
 import { Modal, ModalInput, ModalList, ModalListItem, ModalMessage } from '../../Components/Modal'
 import { filter, search, randomString, randomNumber} from '../../Features'
 import PageEmpty from '../../Components/PageEmpty'
-import { gameData } from '../../Data'
+import { gameData, getLocalStorage } from '../../Data'
 import { ModalRoom } from '../../Components/Room'
 
 export default function Users() {
@@ -27,10 +27,10 @@ export default function Users() {
     const [message, setMessage] = useState({status: false, message: ''})
 
     // Nhận dữ liệu từ localStorage và truyền vào state
-    const [memberList, setMemberList] = useState(JSON.parse(localStorage.getItem('memberData')) || []);
+    const [memberList, setMemberList] = useState(getLocalStorage('member'));
     
     // Lấy dữ liệu room
-    const roomLists = useMemo(() => JSON.parse(localStorage.getItem('pokerData')) || [], [])
+    const roomLists = useMemo(() => getLocalStorage('poker'), [])
 
     // Copy memberList để tìm kiếm
     const [tempList,setTempList] = useState(memberList);
@@ -412,9 +412,9 @@ export default function Users() {
             {message.status &&
                 <Modal
                     header='Message'
-                    acceptText='Okay!!!'
+                    acceptText='Submit!'
                     btnClose={false}
-                    submitModal={() => setMessage({status: false, message: ''})}
+                    submitModal={() => {setMessage({status: false, message: ''})}}
                 >
                     <ModalMessage>
                         {message.message}

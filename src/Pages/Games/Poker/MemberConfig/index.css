@@ -1,5 +1,5 @@
 .poker-member-config {
-  /* animation: slideShow 0.5s ease; */
+  animation: rightToLeft 0.5s ease;
 }
 .poker-member-config-header {
   display: flex;
@@ -9,15 +9,4 @@
   font-weight: 500;
   font-size: 25px;
   color: var(--primary-color);
-}
-.poker-member-body {
-  padding: 10px 0;
-}
-
-.poker-member-length {
-  margin-bottom: 15px;
-  margin-left: 20px;
-  font-weight: 400;
-  color: #555;
-  font-size: 14px;
 }

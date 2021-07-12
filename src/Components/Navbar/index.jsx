@@ -22,9 +22,12 @@ export default function Navbar() {
         </NavLink>
     )
     return (
-        <div className={`navbar${bugger ? ' show' : ''}`}>
-            <Bugger onClick={handleBuggerClick} active={bugger}/>
-            {menu}
-        </div>
+        <>
+            {bugger && <div className='navbar-overlay' onClick={() => setBugger(false)}></div>}
+            <div className={`navbar${bugger ? ' show' : ''}`}>
+                <Bugger onClick={handleBuggerClick} active={bugger}/>
+                {menu}
+            </div>
+        </>
     )
 }

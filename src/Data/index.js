@@ -54,6 +54,7 @@ const getLocalStorage = (value) => {
     switch (value) {
         case 'member': return JSON.parse(localStorage.getItem('memberData')) || []
         case 'poker': return JSON.parse(localStorage.getItem('pokerData')) || []
+        case 'now': return JSON.parse(localStorage.getItem('nowData')) || {}
         default: return [];
     }
 }
@@ -62,6 +63,7 @@ const setLocalStorage = (input, value) => {
     switch (input) {
         case 'memberData': return localStorage.setItem('memberData', JSON.stringify(value))
         case 'pokerData': return localStorage.setItem('pokerData', JSON.stringify(value))
+        case 'nowData': return localStorage.setItem('nowData', JSON.stringify(value))
         default: break;
     }
 }

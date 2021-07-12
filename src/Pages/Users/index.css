@@ -7,6 +7,7 @@
   background: var(--secondary-color);
   width: calc(100% - var(--navbar-width));
   height: 50px;
+  animation: topToBottom 0.3s ease;
 }
 
 .user-header-temp {
@@ -18,6 +19,7 @@
   background: var(--secondary-color);
   width: calc(100% - var(--navbar-width));
   height: 50px;
+  animation: topToBottom 0.3s ease;
 }
 
 .user-header-input {
@@ -27,4 +29,5 @@
 
 .user-list {
   padding-top: 50px;
+  animation: rightToLeft 0.3s ease;
 }

@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import './index.css'
-import { getLocalStorage, setLocalStorage } from '../../../../Data'
+import { getLocalStorage } from '../../../../Data'
 import { Button } from '../../../../Components/Button'
 import Member, {MemberModal} from '../../../../Components/Member'
 import { Modal, ModalMessage } from '../../../../Components/Modal'
 import { Link } from 'react-router-dom'
+import { PokerBody, PokerDesc, PokerHeader } from '..'
+import { updateLocalStorage } from '../../../../Features'
 
 const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
     const [option, setOption] = useState(false)
@@ -49,9 +51,7 @@ const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
 
     useEffect(() => {
         // update localStorage
-        const localStorage = getLocalStorage(gameId)
-        localStorage.splice(indexRoom, 1, room)
-        setLocalStorage(gameId+'Data', localStorage)
+        updateLocalStorage(gameId, indexRoom, room)
 
         // refresh state
         setAddMemberData([])
@@ -60,8 +60,9 @@ const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
 
     return (
         <div className='poker-member-config'>
-            <div className="poker-member-config-header">
-                <h4> Members Config </h4>
+            <PokerHeader
+                headerText='Members Config'
+            >
                 <Button
                     outline
                     active={option}
@@ -69,9 +70,9 @@ const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
                 >
                     Add member
                 </Button>
-            </div>
-            <div className="poker-member-body">
-                <div className="poker-member-length">{room['room-members'].length} members</div>
+            </PokerHeader>
+            <PokerBody>
+                <PokerDesc>{room['room-members'].length} members</PokerDesc>
                 {useMemo(() => getLocalStorage('member').filter(({id}) => room['room-members'].includes(id))
                     .map((item, index) => 
                         <Member
@@ -81,7 +82,7 @@ const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
                         />
                     ), [room])
                 }
-            </div>
+            </PokerBody>
             {option &&
                 <Modal
                     header={ortherMembers.length > 0 ? 'Choose members' : 'Message'}

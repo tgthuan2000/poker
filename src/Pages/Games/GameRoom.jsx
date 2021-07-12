@@ -35,9 +35,9 @@ const GameRooms = () =>  {
             name={item.name}
             color={item.color}
             onClick={() => handleClick(item.id)}
-            active={data.includes(item.id)}
         />
-    ), [ data, handleClick ])
+    ), [ handleClick ])
+    
     useEffect(() => {
         setLocalStorage(gameId+'Data', roomList)
         // refresh state
@@ -126,8 +126,6 @@ const GameRooms = () =>  {
 
         {enterRoom &&
             <Modal
-                submitModal={handleSubmitAddRoom}
-                cancleModal={() => setEnterRoom(false)}
                 header='Enter Room Now!'
                 overlayCancle={false}
                 btnClose={false}

@@ -58,7 +58,6 @@
 }
 
 .overlay {
-  content: "";
   position: fixed;
   z-index: 9;
   top: 0;

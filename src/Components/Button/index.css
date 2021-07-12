@@ -1,95 +1,91 @@
 .btn {
-    position: relative;
-    border: none;
-    outline: none;
-    text-decoration: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--border-radius);
-    background-color: transparent;
+  position: relative;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius);
+  background-color: transparent;
 }
 
-.btnIcon{
-    color: var(--secondary-color);
-    width: 100%;
-    height: var(--btnIcon-size);
-    margin: 20px 0;
-    transition:
-        padding-left 1s ease,
-        color .3s ease,
-        background-color .3s ease
-    ;
+.btnIcon {
+  color: var(--secondary-color);
+  width: 100%;
+  height: var(--btnIcon-size);
+  margin: 20px 0;
+  transition: padding-left 1s ease, color 0.3s ease, background-color 0.3s ease;
 }
 
 .btnIcon > i {
-    font-size: 20px;
+  font-size: 20px;
 }
 
-.btnIcon.active{
-    color: var(--primary-color);
-    background-color: var(--secondary-color);
+.btnIcon.active {
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
 }
 
-.btnWrap{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0 20px;
-    font-weight: 600;
+.btnWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
+  font-weight: 600;
 }
 
-.btnWrap span{
-    font-size: 20px;
-    max-width: 150px;
-    text-align: left;
-    overflow: hidden;
-    white-space: nowrap;
+.btnWrap span {
+  font-size: 20px;
+  max-width: 150px;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .btnWrap i {
-    font-size: 16px;
+  font-size: 16px;
 }
 
-.btnText{
-    padding: 6px 10px;
-    color: var(--primary-color);
-    font-weight: 600;
-    border: 1px solid transparent;
+.btnText {
+  padding: 6px 10px;
+  color: var(--primary-color);
+  font-weight: 600;
+  border: 1px solid transparent;
 }
 
-.btnText > i {
-    margin-right: 6px;
+.btnText > i + .text {
+  margin-left: 6px;
 }
 
-.btnText.outline{
-    border: 1px solid var(--primary-color);
+.btnText.outline {
+  border: 1px solid var(--primary-color);
 }
 
-.btnText.active{
-    font-weight: 600;
-    color: var(--secondary-color);
-    background-color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    box-shadow: 0 0 2px var(--primary-color);
+.btnText.active {
+  font-weight: 600;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0 2px var(--primary-color);
 }
 
-.span{
-    display: none;
-    margin-left: 14px;
-    font-weight: 500;
+.span {
+  display: none;
+  margin-left: 14px;
+  font-weight: 500;
 }
 
-.bugger{
-    border-bottom: 1px solid var(--secondary-color);
-    border-radius: 0;
+.bugger {
+  border-bottom: 1px solid var(--secondary-color);
+  border-radius: 0;
 }
 
-.fullview{
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 0%;
+.fullview {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0%;
 }

@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.css'
 import { PokerBody, PokerDesc, PokerHeader } from '..'
 import { Button } from '../../../../Components/Button'
-import Member from '../../../../Components/Member'
+import {MemberSetPoint} from '../../../../Components/Member'
 import { getLocalStorage } from '../../../../Data'
 import { Modal, ModalMessage } from '../../../../Components/Modal'
 import { updateLocalStorage } from '../../../../Features'
@@ -14,11 +14,11 @@ const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
     const [data, setData] = useState(room['room-members'].map(item => ({id: item, point: 0})))
     const [message, setMessage] = useState({status: false, message: ''})
     
-    const getValuePoint = useCallback((id, index, point) => {
+    const getValuePoint = (id, index, point) => {
         const tempData = [...data]
         tempData[index] = {id, point}
         setData(tempData)
-    }, [data])
+    }
 
     const handleSubmitResult = () => {
         const tempRoom = {...room}
@@ -53,19 +53,18 @@ const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
                 </PokerHeader>
                 <PokerBody>
                     <PokerDesc>Round {room['room-rounds'].length +1}</PokerDesc>
-                    {useMemo(() => getLocalStorage('member').filter(({id}) => room['room-members'].includes(id))
+                    {getLocalStorage('member').filter(({id}) => room['room-members'].includes(id))
                         .map((item, index) => 
-                            <Member
+                            <MemberSetPoint
                                 key={index}
                                 outline
-                                pointClick
                                 name={item.name}
                                 color={item.color}
                                 id={item.id}
                                 index={index}
                                 pointValue={getValuePoint}
                             />
-                        ), [room, getValuePoint])
+                    )
                     }
                 </PokerBody>
             </div>

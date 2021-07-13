@@ -10,6 +10,8 @@
   will-change: margin-top;
   margin-top: -64px;
   animation: topToBottom 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 .navGame.active {
   margin-top: 0;

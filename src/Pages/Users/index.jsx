@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef,useMemo, useCallback } from 'react'
 import './index.css'
-import Member from '../../Components/Member'
+import { MemberOption } from '../../Components/Member'
 import { Button } from '../../Components/Button'
 import { Input } from '../../Components/Input'
 import { Modal, ModalInput, ModalList, ModalListItem, ModalMessage } from '../../Components/Modal'
@@ -53,7 +53,7 @@ export default function Users() {
     
     // Duyệt copyList để render view
     const members = useMemo(() => tempList.map((item, index) => 
-        <Member
+        <MemberOption
             key={index}
             name={item.name}
             color={item.color}
@@ -412,7 +412,7 @@ export default function Users() {
             {message.status &&
                 <Modal
                     header='Message'
-                    acceptText='Submit!'
+                    acceptText='Done!'
                     btnClose={false}
                     submitModal={() => {setMessage({status: false, message: ''})}}
                 >

@@ -39,16 +39,24 @@
 }
 
 /* POKER HEADER */
-.poker-header {
+.poker-header,
+.poker-config {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.poker-config {
+  padding: 0 10px 0 20px;
+  height: 40px;
+  margin-bottom: 5px;
 }
 .poker-header > h4 {
   font-weight: 500;
   font-size: 25px;
   color: var(--primary-color);
 }
-.poker-header-wrap {
+.poker-header-wrap,
+.poker-config-wrap {
   display: flex;
   align-items: center;
 }
@@ -57,7 +65,23 @@
 .poker-header-wrap a {
   margin: 0 5px;
 }
+.poker-config-wrap i {
+  font-size: 14px;
+  color: #777;
+  height: 35px;
+  width: 35px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 
+.poker-config-wrap i:hover {
+  color: white;
+  background-color: #777;
+}
 .poker-body {
   padding: 10px 0;
 }
@@ -66,6 +90,11 @@
 .poker-description {
   margin-bottom: 10px;
   margin-left: 20px;
+  font-weight: 500;
+  color: #555;
+  font-size: 18px;
+}
+.poker-config > span {
   font-weight: 500;
   color: #555;
   font-size: 18px;

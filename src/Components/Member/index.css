@@ -69,6 +69,7 @@
   color: var(--primary-color);
 }
 
+.score,
 .member-point .point {
   margin: 0 5px;
   min-width: 30px;

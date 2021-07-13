@@ -33,7 +33,11 @@ const Poker = () =>  {
                     <Home></Home>
                 }
                 {slug === 'history' &&
-                    <History></History>
+                    <History
+                        gameId={KEY_GAME}
+                        currentRoom={currentRoom}
+                        indexRoom={indexRoom}
+                    />
                 }
                 {slug === 'member-config' &&
                     <MemberConfig 
@@ -72,6 +76,14 @@ export const PokerBody = ({children}) => (
 export const PokerDesc = ({children}) => (
     <div className="poker-description">
         {children}
+    </div>
+)
+export const PokerConfig = ({ text, icon, onClick }) => (
+    <div className="poker-config">
+        <span> {text} </span>
+        <div className="poker-config-wrap">
+            <i className={icon} onClick={onClick}></i>
+        </div>
     </div>
 )
 

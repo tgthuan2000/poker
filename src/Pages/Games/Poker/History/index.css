@@ -2,9 +2,8 @@
   animation: bottomToTop 0.3s ease;
 }
 .poker-history-wrap {
-  margin: 0 10px 10px;
   width: 100%;
-  max-width: max-content;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
   align-items: center;

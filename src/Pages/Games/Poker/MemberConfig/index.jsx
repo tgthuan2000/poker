@@ -88,7 +88,7 @@ const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
                     header={ortherMembers.length > 0 ? 'Choose members' : 'Message'}
                     btnClose={false}
                     overlayCancle={false}
-                    cancleModal={() => setOption(false)}
+                    cancleModal={() => {setOption(false); setAddMemberData([])}}
                     cancleText='Cancle'
                     acceptText={addMemberData.length > 0 && 'Add'}
                     submitModal={handleSubmitAddMember}

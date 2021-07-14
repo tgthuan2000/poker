@@ -28,7 +28,14 @@ const Home = ({ currentRoom, gameId, indexRoom }) => {
 
     const handleSubmitModal = () => {
         setModal(false)
-        setRoom({...room, 'room-active': false})
+        setRoom(
+            {
+                ...room,
+                'room-active': false,
+
+            }
+        )
+        window.location.replace("../");
     }
 
     useEffect(() => {
@@ -38,7 +45,7 @@ const Home = ({ currentRoom, gameId, indexRoom }) => {
         <>
             <div className='poker-home'>
                 <PokerHeader headerText='Home'>
-                    {room['room-active'] &&
+                    {room['room-active'] && room['room-rounds'].length > 0 &&
                         <Button
                             outline
                             active={modal}

@@ -76,6 +76,7 @@ const History = ({ gameId, currentRoom, indexRoom }) => {
                 <PokerBody>
                     {list.length > 0 ? list :
                     <PageEmpty
+                        height='calc(100vh - 130px)'
                         text='No history data!'
                         img='../../../img/history.png'
                     />}

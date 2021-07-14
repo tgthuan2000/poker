@@ -105,7 +105,7 @@ const GameRooms = () =>  {
         {addRoom && 
             <Modal
                 submitModal={handleSubmitAddRoom}
-                cancleModal={() => setAddRoom(false)}
+                cancleModal={() => {setAddRoom(false); setData([])}}
                 header='Choose members'
                 cancleText={list.length >= 2 && 'Cancle'}
                 acceptText={data.length >= 2 && 'Create!'}

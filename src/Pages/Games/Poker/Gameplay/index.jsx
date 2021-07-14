@@ -13,7 +13,6 @@ const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
     const [submitModal, setSubmitModal] = useState(false)
     const [data, setData] = useState(room['room-members'].map(item => ({id: item, point: 0})))
     const [message, setMessage] = useState({status: false, message: ''})
-    
     const getValuePoint = (id, index, point) => {
         const tempData = [...data]
         tempData[index] = {id, point}
@@ -46,10 +45,12 @@ const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
                 <PokerHeader
                     headerText='Gameplay'
                 >
-                    <Button
-                        active
-                        onClick={() => setSubmitModal(true)}
-                    > Submit </Button>
+                    {data.some(({point}) => point !== 0) &&
+                        <Button
+                            active
+                            onClick={() => setSubmitModal(true)}
+                        > Submit </Button>
+                    }
                 </PokerHeader>
                 <PokerBody>
                     <PokerDesc>Round {room['room-rounds'].length +1}</PokerDesc>

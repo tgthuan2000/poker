@@ -16,13 +16,18 @@ const Poker = () =>  {
     const KEY_GAME = 'poker'
     const indexRoom = getLocalStorage(KEY_GAME).findIndex(item => item['room-id'] === roomId)
     const currentRoom = getLocalStorage(KEY_GAME)[indexRoom]
-
-    const navbar = pokerConfig.navbar.map((item, index) => 
-        <Link to={`./${item.link}`} className={`poker-nav-link${slug === item.link ? ' active' : ''}`} key={index}>
-            <i className={item.icon}></i>
-        </Link>
-    )
-
+    const navbar = currentRoom['room-active'] ?
+        pokerConfig.navbar.map((item, index) => 
+            <Link to={`./${item.link}`} className={`poker-nav-link${slug === item.link ? ' active' : ''}`} key={index}>
+                <i className={item.icon}></i>
+            </Link>
+        )
+        :
+        pokerConfig.navbar.filter(x => x.block).map((item, index) => 
+            <Link to={`./${item.link}`} className={`poker-nav-link${slug === item.link ? ' active' : ''}`} key={index}>
+                <i className={item.icon}></i>
+            </Link>
+        )
     return (
         <div className='poker'>
             <div className='poker-nav'>
@@ -30,7 +35,11 @@ const Poker = () =>  {
             </div>
             <div className="poker-wrap">
                 {slug === 'home' &&
-                    <Home></Home>
+                    <Home
+                        gameId={KEY_GAME}
+                        currentRoom={currentRoom}
+                        indexRoom={indexRoom}
+                    />
                 }
                 {slug === 'history' &&
                     <History
@@ -78,12 +87,14 @@ export const PokerDesc = ({children}) => (
         {children}
     </div>
 )
-export const PokerConfig = ({ text, icon, onClick }) => (
+export const PokerConfig = ({ text, icon, onClick, active }) => (
     <div className="poker-config">
         <span> {text} </span>
-        <div className="poker-config-wrap">
-            <i className={icon} onClick={onClick}></i>
-        </div>
+        {active &&
+            <div className="poker-config-wrap">
+                <i className={icon} onClick={onClick}></i>
+            </div>
+        }
     </div>
 )
 

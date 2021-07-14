@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { PokerBody, PokerConfig, PokerHeader } from '..'
 import {MemberShowPoint, MemberSetPoint} from '../../../../Components/Member'
 import { Modal, ModalMessage } from '../../../../Components/Modal'
+import PageEmpty from '../../../../Components/PageEmpty'
 import { getLocalStorage } from '../../../../Data'
 import { updateLocalStorage } from '../../../../Features'
 import './index.css'
@@ -25,6 +26,7 @@ const History = ({ gameId, currentRoom, indexRoom }) => {
         <div className='poker-history-wrap' key={index}>
             <PokerConfig
                 text={`Round ${room['room-rounds'].length - index}`}
+                active={room['room-active']}
                 icon='fas fa-pencil-alt'
                 onClick={() =>
                     {
@@ -72,13 +74,17 @@ const History = ({ gameId, currentRoom, indexRoom }) => {
             <div className='poker-history'>
                 <PokerHeader headerText='History' />
                 <PokerBody>
-                    {list}
+                    {list.length > 0 ? list :
+                    <PageEmpty
+                        text='No history data!'
+                        img='../../../img/history.png'
+                    />}
                 </PokerBody>
             </div>
             {config.status &&
                 <Modal
                     header={`Round ${config.index}`}
-                    acceptText='Change!'
+                    acceptText={data.some(({point}) => point !== 0) && 'Change!'}
                     cancleText='Back'
                     btnClose={false}
                     overlayCancle={false}

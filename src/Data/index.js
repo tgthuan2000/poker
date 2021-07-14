@@ -34,18 +34,22 @@ const pokerConfig = {
         {
             link: 'home',
             icon: 'fas fa-home',
+            block: true,
         },
         {
             link: 'gameplay',
             icon: 'fas fa-gamepad',
+            block: false,
         },
         {
             link: 'history',
             icon: 'fas fa-history',
+            block: true,
         },
         {
             link: 'member-config',
             icon: 'fas fa-users-cog',
+            block: false,
         },
     ],
 }

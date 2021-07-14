@@ -56,6 +56,7 @@ export default function Users() {
         <MemberOption
             key={index}
             name={item.name}
+            outline
             color={item.color}
             optionClick={() => {setShowModalOption(true); setValueOption(item.id)}}
         />
@@ -333,6 +334,7 @@ export default function Users() {
                     header='Rename'
                     acceptText={acceptRename && 'Accept!'}
                     cancleText='Cancle'
+                    overlayCancle={false}
                 >
                     <ModalInput>
                         <Input

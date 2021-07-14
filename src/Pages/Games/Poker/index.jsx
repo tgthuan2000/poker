@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './index.css'
 import { useLocation, useParams } from 'react-router'
 import { pokerConfig, setLocalStorage } from '../../../Data'
@@ -8,14 +8,20 @@ import History from './History'
 import MemberConfig from './MemberConfig'
 import Gameplay from './Gameplay'
 import {getLocalStorage} from '../../../Data'
+import PageEmpty from '../../../Components/PageEmpty'
 
 const Poker = () =>  {
     const localtion =  useLocation()
-    setLocalStorage('nowData',{status: true, link: localtion.pathname})
     const { roomId, slug } = useParams()
     const KEY_GAME = 'poker'
     const indexRoom = getLocalStorage(KEY_GAME).findIndex(item => item['room-id'] === roomId)
     const currentRoom = getLocalStorage(KEY_GAME)[indexRoom]
+    useEffect(() => {
+        if(currentRoom['room-active'])
+            setLocalStorage('nowData', {status: true, link: localtion.pathname})
+        else
+            setLocalStorage('nowData', {})
+    })
     const navbar = currentRoom['room-active'] ?
         pokerConfig.navbar.map((item, index) => 
             <Link to={`./${item.link}`} className={`poker-nav-link${slug === item.link ? ' active' : ''}`} key={index}>
@@ -34,33 +40,38 @@ const Poker = () =>  {
                 {navbar}
             </div>
             <div className="poker-wrap">
-                {slug === 'home' &&
+                {slug === 'home' ?
                     <Home
                         gameId={KEY_GAME}
                         currentRoom={currentRoom}
                         indexRoom={indexRoom}
                     />
-                }
-                {slug === 'history' &&
+                :
+                slug === 'history' ?
                     <History
                         gameId={KEY_GAME}
                         currentRoom={currentRoom}
                         indexRoom={indexRoom}
                     />
-                }
-                {slug === 'member-config' &&
+                :
+                slug === 'member-config' && currentRoom['room-active'] ?
                     <MemberConfig 
                         gameId={KEY_GAME}
                         currentRoom={currentRoom}
                         indexRoom={indexRoom}
                     />
-                }
-                {slug === 'gameplay' &&
+                :
+                slug === 'gameplay' && currentRoom['room-active'] ?
                     <Gameplay
                         gameId={KEY_GAME}
                         currentRoom={currentRoom}
                         indexRoom={indexRoom}
                     />
+                :
+                <PageEmpty
+                    height='calc(100vh - 80px)'
+                    img='../../../img/error-404.png'
+                />
                 }
             </div>
         </div>

@@ -6,7 +6,7 @@ import Member, {MemberModal} from '../../../../Components/Member'
 import { Modal, ModalMessage } from '../../../../Components/Modal'
 import { Link } from 'react-router-dom'
 import { PokerBody, PokerDesc, PokerHeader } from '..'
-import { updateLocalStorage } from '../../../../Features'
+import { getMembersCurrent, getMembersId, setMemberFormat, updateLocalStorage } from '../../../../Features'
 
 const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
     const [option, setOption] = useState(false)
@@ -25,7 +25,7 @@ const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
         }
     }, [addMemberData])
 
-    const ortherMembers = useMemo(() => getLocalStorage('member').filter(({id}) => !room['room-members'].includes(id))
+    const ortherMembers = useMemo(() => getLocalStorage('member').filter(({id}) => !getMembersId(room['room-members']).includes(id))
         .map((item, index) => 
             <MemberModal
                 key={index}
@@ -39,7 +39,7 @@ const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
     const handleSubmitAddMember = () => {
         setRoom({
             ...room,
-            'room-members': [...room['room-members'], ...addMemberData]
+            'room-members': [...room['room-members'], ...(addMemberData.map(x => setMemberFormat(x)))]
         })
         setMessage(
             {
@@ -73,15 +73,16 @@ const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
             </PokerHeader>
             <PokerBody>
                 <PokerDesc>{room['room-members'].length} members</PokerDesc>
-                {useMemo(() => getLocalStorage('member').filter(({id}) => room['room-members'].includes(id))
-                    .map((item, index) => 
+                <div className="poker-body-wrap">
+                    {useMemo(() => getMembersCurrent(room['room-members']).map((item, index) => 
                         <Member
                             key={index}
                             name={item.name}
                             color={item.color}
                         />
-                    ), [room])
-                }
+                        ), [room])
+                    }
+                </div>
             </PokerBody>
             {option &&
                 <Modal

@@ -16,7 +16,7 @@ export default function Home() {
         </div>
         {enterRoom.status &&
             <Modal
-                header='Continue game?'
+                header='Continue last game?'
                 overlayCancle={false}
                 btnClose={false}
                 >

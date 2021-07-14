@@ -6,7 +6,7 @@ import { gameData, getLocalStorage, setLocalStorage } from '../../Data'
 import { Modal, ModalComfirm } from '../../Components/Modal'
 import { MemberModal } from '../../Components/Member'
 import { Room } from '../../Components/Room'
-import { getDateTime, randomString } from '../../Features'
+import { getDateTime, mergeMembers, randomString, setMemberFormat } from '../../Features'
 import PageEmpty from '../../Components/PageEmpty'
 
 
@@ -52,29 +52,30 @@ const GameRooms = () =>  {
             {
                 'room-id': random,
                 'room-name': gameId + '_' + random,
-                'room-members': data,
+                'room-members': data.map(x => setMemberFormat(x)),
                 'room-create-at': dateTime,
                 'room-active': true,
                 'room-rounds': [],
-                'room-hidden-members': [],
-                'room-total-score': [],
-
+                'room-total-score': []
             },
             ...roomList
         ])
         setEnterRoom(true)
     }
 
-    const rooms = useMemo(() => roomList.map((item, index) => 
-        <Room
-            key={index}
-            name={item['room-name']}
-            length={item['room-members'].length}
-            createAt={item['room-create-at']}
-            active={item['room-active']}
-            link={`./${gameId}/${item['room-id']}/home`}
-        />
-    ), [roomList, gameId])
+    const rooms = useMemo(() => roomList.map((item, index) => {
+        return (
+            <Room
+                key={index}
+                name={item['room-name']}
+                length={item['room-members'].length}
+                createAt={item['room-create-at']}
+                active={item['room-active']}
+                members={!item['room-active'] && mergeMembers(item['room-members'], 'total').sort((a,b) => b.total - a.total).slice(0, 2)}
+                link={`./${gameId}/${item['room-id']}/home`}
+            />
+        )
+    }), [roomList, gameId])
     return (
         <>
         <div className='game-room'>
@@ -96,7 +97,8 @@ const GameRooms = () =>  {
                 </div>
             :
                 <PageEmpty
-                    text='Just add a new room!!!'
+                    onClick={() => setAddRoom(true)}
+                    text='Click to add new room!!'
                     img='../img/empty-room.png'
                 />
             }

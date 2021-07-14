@@ -74,12 +74,13 @@ const History = ({ gameId, currentRoom, indexRoom }) => {
             <div className='poker-history'>
                 <PokerHeader headerText='History' />
                 <PokerBody>
-                    {list.length > 0 ? list :
-                    <PageEmpty
-                        height='calc(100vh - 130px)'
-                        text='No history data!'
-                        img='../../../img/history.png'
-                    />}
+                    {list.length > 0 ? <div className='poker-body-wrap'>{list}</div> :
+                        <PageEmpty
+                            height='calc(100vh - 130px)'
+                            text='No history data!'
+                            img='../../../img/history.png'
+                        />
+                    }
                 </PokerBody>
             </div>
             {config.status &&

@@ -18,6 +18,9 @@
 }
 
 .game-room-list {
-  padding: 60px 10px 0;
+  padding: 65px 5px 0;
   animation: rightToLeft 0.3s ease;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }

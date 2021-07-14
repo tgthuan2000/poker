@@ -4,9 +4,9 @@ import { MemberOption } from '../../Components/Member'
 import { Button } from '../../Components/Button'
 import { Input } from '../../Components/Input'
 import { Modal, ModalInput, ModalList, ModalListItem, ModalMessage } from '../../Components/Modal'
-import { filter, search, randomString, randomNumber} from '../../Features'
+import { filter, search, randomString, randomNumber, getMembersId, setMemberFormat} from '../../Features'
 import PageEmpty from '../../Components/PageEmpty'
-import { gameData, getLocalStorage } from '../../Data'
+import { gameData, getLocalStorage, setLocalStorage } from '../../Data'
 import { ModalRoom } from '../../Components/Room'
 
 export default function Users() {
@@ -37,7 +37,7 @@ export default function Users() {
 
     // Cập nhật khi memberList thay đổi
     useEffect(() => {
-        localStorage.setItem('memberData', JSON.stringify(memberList))
+        setLocalStorage('memberData', memberList)
         setTempList(memberList)
         // refresh all sate
         setCheck(false)
@@ -110,13 +110,15 @@ export default function Users() {
         )
         setMemberList(newList)
 
-        const tempRoomLists = [...roomLists]
-        tempRoomLists.forEach(item => {
-            let index = item['room-members'].indexOf(valueOption)
+        // PokerData
+        const tempRoomList = [...roomLists]
+        tempRoomList.forEach(item => {
+            let index = getMembersId(item['room-members']).indexOf(valueOption)
             if(index !== -1)
-                item['room-members'].splice(index,1)
+                item['room-members'].splice(index, 1)
         })
-        localStorage.setItem('pokerData', JSON.stringify(tempRoomLists))
+        // Duyệt xóa tất cả game!!!!
+        setLocalStorage('pokerData', tempRoomList)
 
         setMessage(
             {
@@ -147,9 +149,9 @@ export default function Users() {
         const tempRoomLists = [...roomLists]
         tempRoomLists.forEach(item => {
             if(roomData.includes(item['room-id']))
-                item['room-members'].push(valueOption)
+                item['room-members'].push(setMemberFormat(valueOption))
         })
-        localStorage.setItem(game+'Data', JSON.stringify(tempRoomLists))
+        setLocalStorage(game+'Data', tempRoomLists)
         setGame('')
         setValueOption('')
         setShowAddRoomModal(false)
@@ -179,6 +181,7 @@ export default function Users() {
             <ModalRoom
                 key={index}
                 name={item['room-name']}
+                createAt={item['room-create-at']}
                 length={item['room-members'].length}
                 onClick={() => handleClickRoom(item['room-id'])}
                 active={roomData.includes(item['room-id'])}
@@ -253,8 +256,9 @@ export default function Users() {
                     {/* Hiển thị emptyPage*/}
                     {memberList.length === 0 &&
                         <PageEmpty
-                            text='Add member please!!!'
-                            img='./img/empty.png'
+                            img='./img/add-user.png'
+                            text='Click to add new member!'
+                            onClick={() => setCheck(true)}
                         />
                     }
             </div>

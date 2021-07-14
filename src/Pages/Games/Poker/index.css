@@ -21,7 +21,11 @@
 }
 
 .poker-nav-link {
-  padding: 10px 20px;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 20%;
   text-decoration: none;
   color: var(--secondary-color);
   border-radius: 5px;
@@ -99,4 +103,10 @@
   font-weight: 500;
   color: #555;
   font-size: 18px;
+}
+
+.poker-body-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }

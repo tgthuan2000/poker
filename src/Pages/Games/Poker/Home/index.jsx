@@ -3,14 +3,14 @@ import { PokerBody, PokerDesc, PokerHeader } from '..'
 import { Button } from '../../../../Components/Button'
 import { MemberShowPoint } from '../../../../Components/Member'
 import { Modal, ModalMessage } from '../../../../Components/Modal'
-import { getLocalStorage } from '../../../../Data'
-import { updateLocalStorage } from '../../../../Features'
+import { getMembersId, mergeMembers, updateLocalStorage } from '../../../../Features'
 import './index.css'
 
 const Home = ({ currentRoom, gameId, indexRoom }) => {
     const [modal, setModal] = useState(false)
     const [room, setRoom] = useState(currentRoom)
-    const totals = useMemo(() => room['room-members'].map(id => {
+    const [message, setMessage] = useState({status: false, message: ''})
+    const totals = useMemo(() => getMembersId(room['room-members']).map(id => {
         const total = room['room-rounds'].reduce((result, round) =>
             result + round.reduce((init, item)=>
                 item.id === id ? init + item.point : init
@@ -19,12 +19,7 @@ const Home = ({ currentRoom, gameId, indexRoom }) => {
         return {id, total}
     }), [room])
     
-    const members = useMemo(() => getLocalStorage('member')
-        .filter(({id}) => room['room-members'].includes(id))
-        .map(item => {
-            const index = totals.findIndex(x => x.id === item.id)
-            return {...item, point: totals[index].total}
-        }), [room, totals])
+    const members = useMemo(() => mergeMembers(room['room-members'], 'point', totals, 'total'), [room, totals])
 
     const handleSubmitModal = () => {
         setModal(false)
@@ -32,10 +27,15 @@ const Home = ({ currentRoom, gameId, indexRoom }) => {
             {
                 ...room,
                 'room-active': false,
-
+                'room-members': totals
             }
         )
-        window.location.replace("../");
+        setMessage(
+            {
+                status: true,
+                message: 'Congratulation on finished this game!!!!'
+            }
+        )
     }
 
     useEffect(() => {
@@ -54,20 +54,22 @@ const Home = ({ currentRoom, gameId, indexRoom }) => {
                     }
                 </PokerHeader>
                 <PokerBody>
-                    <PokerDesc>Totals</PokerDesc>
-                    {useMemo(() => 
-                        members.sort((a, b) => b.point - a.point)
-                        .map((item, index) =>
-                            <MemberShowPoint
-                                key={index}
-                                outline
-                                name={item.name}
-                                color={item.color}
-                                point={item.point}
-                            />
-                        )
-                    , [members])
-                    }
+                    <PokerDesc>Ranking</PokerDesc>
+                    <div className="poker-body-wrap">
+                        {useMemo(() => 
+                            members.sort((a, b) => b.point - a.point)
+                            .map((item, index) =>
+                                <MemberShowPoint
+                                    key={index}
+                                    outline
+                                    name={item.name}
+                                    color={item.color}
+                                    point={item.point}
+                                />
+                            )
+                        , [members])
+                        }
+                    </div>
                 </PokerBody>
             </div>
             {modal &&
@@ -82,6 +84,20 @@ const Home = ({ currentRoom, gameId, indexRoom }) => {
                 >
                     <ModalMessage>
                         Finish this game!!!!
+                    </ModalMessage>
+                </Modal>
+            }
+
+            {message.status &&
+                <Modal
+                    header='Message'
+                    btnClose={false}
+                    overlayCancle={false}
+                    acceptText='Done!'
+                    submitModal={() => setMessage({})}
+                >
+                    <ModalMessage>
+                        {message.message}
                     </ModalMessage>
                 </Modal>
             }

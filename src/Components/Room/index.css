@@ -6,12 +6,15 @@
   padding: 10px;
   border-radius: var(--border-radius);
   box-shadow: 0 0 2px var(--primary-color);
-  margin-bottom: 15px;
+  margin: 0 10px 20px;
   cursor: pointer;
   background-color: var(--secondary-color);
+  width: 400px;
+  max-width: 100%;
 }
 
 .room-modal {
+  width: 100%;
   margin: 12px 0;
   border-radius: 5px;
   user-select: none;
@@ -23,7 +26,7 @@
   opacity: 0.9;
 }
 
-.room-name {
+.room-create-at {
   font-size: 18px;
   font-weight: 500;
   overflow: hidden;
@@ -49,7 +52,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
 }
 
 .room-wrapper:last-child {
@@ -59,4 +62,11 @@
 .room-wrapper span {
   font-weight: 300;
   font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.room-wrapper span > img {
+  width: 25px;
+  margin-right: 5px;
 }

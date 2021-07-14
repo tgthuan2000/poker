@@ -5,7 +5,8 @@
   transform: translate(-50%, -50%);
   z-index: 10;
   background-color: var(--secondary-color);
-  width: 300px;
+  min-width: 320px;
+  max-width: 600px;
   max-height: 70vh;
   border-radius: var(--border-radius);
   display: flex;

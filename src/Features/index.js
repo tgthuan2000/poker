@@ -52,3 +52,22 @@ export const updateLocalStorage = (gameId, indexRoom, room) => {
     localStorage.splice(indexRoom, 1, room)
     setLocalStorage(gameId+'Data', localStorage)
 }
+
+export const setMemberFormat = (memberId) => {
+    return {id: memberId, point: 0}
+}
+
+// TRẢ VỀ ARRAY ID TRONG/KHI CÓ room['room-members']
+export const getMembersId = (members) => {
+    return members.map(({id}) => id)
+}
+
+// TRẢ VỀ ARRAY THÔNG TIN MEMBERS TRONG/KHI CÓ room['room-members']
+export const getMembersCurrent = (members) => {
+    return getLocalStorage('member').filter(({id}) => getMembersId(members).includes(id))
+}
+
+// TRẢ VỀ ARRAY MỚI KHI MERGE 2 ARRAY DỰA VÀO ID TRONG/KHI CÓ room['room-members']
+export const mergeMembers = (arr1, name, arr2 = arr1, value = name) => {
+    return getMembersCurrent(arr1).map(member => ({...member, [name]: arr2.find(x => x.id === member.id)[value]}))
+}

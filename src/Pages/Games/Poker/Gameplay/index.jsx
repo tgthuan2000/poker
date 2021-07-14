@@ -3,15 +3,14 @@ import './index.css'
 import { PokerBody, PokerDesc, PokerHeader } from '..'
 import { Button } from '../../../../Components/Button'
 import {MemberSetPoint} from '../../../../Components/Member'
-import { getLocalStorage } from '../../../../Data'
 import { Modal, ModalMessage } from '../../../../Components/Modal'
-import { updateLocalStorage } from '../../../../Features'
+import { getMembersCurrent, updateLocalStorage } from '../../../../Features'
 
 
 const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
     const [room, setRoom] = useState(currentRoom)
     const [submitModal, setSubmitModal] = useState(false)
-    const [data, setData] = useState(room['room-members'].map(item => ({id: item, point: 0})))
+    const [data, setData] = useState(room['room-members'])
     const [message, setMessage] = useState({status: false, message: ''})
     const getValuePoint = (id, index, point) => {
         const tempData = [...data]
@@ -36,7 +35,7 @@ const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
 
         setSubmitModal(false)
         // refresh data
-        setData(room['room-members'].map(item => ({id: item, point: 0})))
+        setData(room['room-members'])
     }, [room, gameId, indexRoom])
     
     return (
@@ -54,19 +53,21 @@ const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
                 </PokerHeader>
                 <PokerBody>
                     <PokerDesc>Round {room['room-rounds'].length +1}</PokerDesc>
-                    {getLocalStorage('member').filter(({id}) => room['room-members'].includes(id))
-                        .map((item, index) => 
-                            <MemberSetPoint
-                                key={index}
-                                outline
-                                name={item.name}
-                                color={item.color}
-                                id={item.id}
-                                index={index}
-                                pointValue={getValuePoint}
-                            />
-                    )
-                    }
+                    <div className="poker-body-wrap">
+                        {getMembersCurrent(room['room-members'])
+                            .map((item, index) => 
+                                <MemberSetPoint
+                                    key={index}
+                                    outline
+                                    name={item.name}
+                                    color={item.color}
+                                    id={item.id}
+                                    index={index}
+                                    pointValue={getValuePoint}
+                                />
+                        )
+                        }
+                    </div>
                 </PokerBody>
             </div>
             {submitModal &&

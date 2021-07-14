@@ -71,18 +71,16 @@ const History = ({ gameId, currentRoom, indexRoom }) => {
     }
     return (
         <>
-            <div className='poker-history'>
-                <PokerHeader headerText='History' />
-                <PokerBody>
-                    {list.length > 0 ? <div className='poker-body-wrap'>{list}</div> :
-                        <PageEmpty
-                            height='calc(100vh - 130px)'
-                            text='No history data!'
-                            img='../../../img/history.png'
-                        />
-                    }
-                </PokerBody>
-            </div>
+            <PokerHeader headerText='History' />
+            <PokerBody>
+                {list.length > 0 ? <div className='poker-body-wrap'>{list}</div> :
+                    <PageEmpty
+                        height='calc(100vh - 130px)'
+                        text='No history data!'
+                        img='../../../img/history.png'
+                    />
+                }
+            </PokerBody>
             {config.status &&
                 <Modal
                     header={`Round ${config.index}`}
@@ -103,6 +101,7 @@ const History = ({ gameId, currentRoom, indexRoom }) => {
                             index={index}
                             currentPoint={item.point}
                             pointValue={handleSetPoint}
+                            modal
                         />
                     )
                     }

@@ -9,8 +9,8 @@
   margin: 0 10px 20px;
   cursor: pointer;
   background-color: var(--secondary-color);
-  width: 400px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 400px;
 }
 
 .room-modal {

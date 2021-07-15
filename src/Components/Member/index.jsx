@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../Button'
 import './index.css'
 
@@ -7,7 +7,7 @@ export default function Member({ children, name, color, outline, modal }) {
     const textColor = `hsl(${color}, 100%, 30%)`
     const borderColor = `hsl(${color}, 100%, 50%)`
     return (
-        <div className={`member${outline ? ' outline' : ''}${modal ? ' member-modal' : ''}`}>
+        <div className={`member${outline ? ' member-outline' : ''}${modal ? ' member-modal' : ''}`}>
             <div className='member-avatar' style={{background:avatarBackground, color:textColor, border:`1px solid ${borderColor}`}}>{name[0]}</div>
             <h4 className='member-name' style={{color:textColor}}>{name}</h4>
             {children}
@@ -26,14 +26,19 @@ export function MemberShowPoint({ name, color, outline, point}) {
 export function MemberOption({ name, color, outline, optionClick }) {
     return (
         <Member  name={name} color={color} outline={outline}>
-            <span className='member-option' style={{color:`hsl(${color}, 100%, 30%)`}} onClick={optionClick}><i className="fas fa-ellipsis-v"></i></span>
+            <span className='member-option' style={{color:`hsl(${color}, 100%, 30%)`}} onClick={optionClick}>
+                <i className="fas fa-ellipsis-v"></i>
+            </span>
         </Member>
     )
 }
 
 
 export function MemberSetPoint({ name, color, outline, currentPoint, pointValue, id, index, modal }) {
-    const [point, setPoint] = useState(currentPoint || 0)
+    const [point, setPoint] = useState(0)
+    useEffect(() => {
+        setPoint(currentPoint)
+    }, [currentPoint])
     return (
         <Member name={name} color={color} outline={outline} modal={modal}>
             <div className="member-point">
@@ -51,7 +56,7 @@ export const MemberModal = ({ name, onClick, color }) => {
     const borderColor = `hsl(${color}, 100%, 50%)`
     const [click, setClick] = useState(false)
     return (
-        <div className={`member outline member-modal${click ? ' member-checked' : '' }`} onClick={() => {setClick(!click); onClick()}}>
+        <div className={`member member-outline member-modal${click ? ' member-checked' : '' }`} onClick={() => {setClick(!click); onClick()}}>
             <div className='member-avatar' style={{background:avatarBackground, color:textColor, border:`1px solid ${borderColor}`}}>{name[0]}</div>
             <h4 className='member-name' style={{color:textColor}}>{name}</h4>
             {click &&

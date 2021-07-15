@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, ButtonLink } from '../../Components/Button'
 import { Modal, ModalComfirm } from '../../Components/Modal'
+import PageEmpty from '../../Components/PageEmpty'
 import { getLocalStorage, setLocalStorage } from '../../Data'
 import './index.css'
 
 export default function Home() {
-    const [enterRoom, setEnterRoom] = useState({})
-    useEffect(() => {
-        setEnterRoom(getLocalStorage('now'))
-    }, [])
+    const [enterRoom, setEnterRoom] = useState(getLocalStorage('now'))
     return (
         <>
         <div className='home'>
-            Home
+            <PageEmpty
+                img='./img/house.png'
+                text='Wellcome ❤️'
+            />
         </div>
         {enterRoom.status &&
             <Modal

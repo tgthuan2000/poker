@@ -12,6 +12,7 @@ const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
     const [submitModal, setSubmitModal] = useState(false)
     const [data, setData] = useState(room['room-members'])
     const [message, setMessage] = useState({status: false, message: ''})
+
     const getValuePoint = (id, index, point) => {
         const tempData = [...data]
         tempData[index] = {id, point}
@@ -37,7 +38,7 @@ const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
         // refresh data
         setData(room['room-members'])
     }, [room, gameId, indexRoom])
-    
+    console.log(data)
     return (
         <>
             <div className='poker-gameplay'>
@@ -63,6 +64,7 @@ const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
                                     color={item.color}
                                     id={item.id}
                                     index={index}
+                                    currentPoint={data[index].point}
                                     pointValue={getValuePoint}
                                 />
                         )

@@ -18,6 +18,12 @@ const NavbarMenu =
             icon: 'fas fa-gamepad',
             path: '/games',
         },
+        {
+            id: 4,
+            name: 'Frames',
+            icon: 'fas fa-crop-alt',
+            path: '/frames',
+        },
     ]
 
 const gameData = 

@@ -7,6 +7,7 @@ import GameRooms from './Pages/Games/GameRoom.jsx';
 import Poker from './Pages/Games/Poker';
 import NavbarGame from './Pages/Games/NavbarGame';
 import Users from './Pages/Users';
+import Frames from './Pages/Frames';
 
 function App() {
   return (
@@ -39,9 +40,13 @@ function App() {
           </Route>
           <Route path='/games/poker/:roomId/:slug' exact>
             <NavbarGame />
-            {/* <div className="game-zone"> */}
-              <Poker/>
-            {/* </div> */}
+            <Poker/>
+          </Route>
+          <Route path='/frames' exact>
+            <Navbar />
+            <div className='app-wrap'>
+              <Frames/>
+            </div>
           </Route>
         </Switch>
       </div>

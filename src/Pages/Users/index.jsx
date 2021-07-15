@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef,useMemo, useCallback } from 'react'
 import './index.css'
 import { MemberOption } from '../../Components/Member'
+import CustomMember from '../../Components/Member/custom.jsx'
 import { Button } from '../../Components/Button'
 import { Input } from '../../Components/Input'
 import { Modal, ModalInput, ModalList, ModalListItem, ModalMessage } from '../../Components/Modal'
@@ -52,8 +53,20 @@ export default function Users() {
     }, [memberList]);
     
     // Duyệt copyList để render view
+    // const members = useMemo(() => tempList.map((item, index) => 
+    //     <MemberOption
+    //         key={index}
+    //         name={item.name}
+    //         outline
+    //         color={item.color}
+    //         optionClick={() => {setShowModalOption(true); setValueOption(item.id)}}
+    //     />
+    // ), [tempList]);
+
+    // Custom member
+
     const members = useMemo(() => tempList.map((item, index) => 
-        <MemberOption
+        <CustomMember
             key={index}
             name={item.name}
             outline

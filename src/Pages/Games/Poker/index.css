@@ -12,7 +12,7 @@
   position: sticky;
   top: 0;
   height: var(--navbar-sub-poker);
-  z-index: 10;
+  z-index: 9;
   animation: topToBottom 0.3s ease;
 }
 

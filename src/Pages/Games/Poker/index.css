@@ -45,7 +45,7 @@
 /* POKER HEADER */
 .poker-header,
 .poker-config {
-  height: 30px;
+  height: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;

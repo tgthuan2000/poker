@@ -6,7 +6,7 @@ import { Input } from '../../Components/Input'
 import { Modal, ModalInput, ModalList, ModalListItem, ModalMessage } from '../../Components/Modal'
 import { filter, search, randomString, randomNumber, getMembersId, setMemberFormat} from '../../Features'
 import PageEmpty from '../../Components/PageEmpty'
-import { gameData, getLocalStorage, setLocalStorage } from '../../Data'
+import { gameData, getLocalStorage, initialMember, setLocalStorage } from '../../Data'
 import { ModalRoom } from '../../Components/Room'
 
 export default function Users() {
@@ -80,6 +80,7 @@ export default function Users() {
                 id: randomString(), // random id, default 5 chars
                 color: randomNumber(),
                 name: inputValue.current.value.trim(),
+                awards: [],
             },
             ...memberList,
         ])
@@ -126,23 +127,6 @@ export default function Users() {
                 message: 'Delete success!!!'
             }
         )
-    }
-
-    // Random create member
-    const randomCreateMember = () => {
-        const numberLoop = 15
-        const array = [...memberList]
-        for(let i = 0 ; i < numberLoop ; i++){
-            const random = randomString(7)
-            array.unshift(
-                {
-                    id: random,
-                    color: randomNumber(),
-                    name: 'member_'+random,
-                }
-            )
-            setMemberList(array)
-        }
     }
 
     const handleSubmitAddRoomModal = () => {
@@ -201,52 +185,56 @@ export default function Users() {
             }
         > {item.name} </ModalListItem>
     ),[])
+
     return (
         <>
             <div className='user'>
                     {/* Kiểm tra có hiển thị btn Add Member hay input */}
-                    {check ?
-                    <div className='user-header'>
-                        <Input
-                            className="user-header-input"
-                            placeholder='Enter a new member name'
-                            onInput={handleOnInput}
-                            useRef={inputValue}
-                            autoFocus
-                        />
-                        {/* Kiểm tra input value có hợp lệ ?  */}
-                        { showAddMemberBtn ?
+                    <div className='user-header' style={{justifyContent:!check && members.length === 0 && 'space-between'}}>
+                        {check ?
+                        <>
+                            <Input
+                                className="user-header-input"
+                                placeholder='Enter a new member name'
+                                onInput={handleOnInput}
+                                useRef={inputValue}
+                                autoFocus
+                            />
+                            {/* Kiểm tra input value có hợp lệ ?  */}
+                            { showAddMemberBtn ?
+                                <Button
+                                    active
+                                    onClick={handleClickAddMember}
+                                >
+                                    Add
+                                </Button>
+                                :
+                                <Button
+                                    onClick={() => {setCheck(false); setTempList(memberList)}}
+                                >
+                                    Back
+                                </Button>
+                            }
+                        </>
+                        :
+                        <>
+                            { members.length === 0 &&
+                                <Button
+                                    onClick={() => setMemberList(initialMember)}
+                                    active
+                                >
+                                    Initial Members
+                                </Button>
+                            }
                             <Button
-                                active
-                                onClick={handleClickAddMember}
+                                onClick={() => setCheck(true)}
+                                icon='fas fa-plus'
                             >
-                                Add
+                                Add Member
                             </Button>
-                            :
-                            <Button
-                                onClick={() => {setCheck(false); setTempList(memberList)}}
-                            >
-                                Back
-                            </Button>
+                        </>
                         }
                     </div>
-                    :
-                    // Khi xóa AutoAdd chỉ cần đưa class user-header ra ngoài bọc cả thẻ và bỏ class user-header-temp
-                    <div className="user-header-temp">
-                        <Button
-                            onClick={randomCreateMember}
-                            active
-                        >
-                            Auto Add
-                        </Button>
-                        <Button
-                            onClick={() => setCheck(true)}
-                            icon='fas fa-plus'
-                        >
-                            Add Member
-                        </Button>
-                    </div>
-                    }
                     {/* Hiển thị memberList*/}
                     { members.length > 0 &&
                         <div className='user-list'>

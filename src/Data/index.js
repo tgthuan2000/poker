@@ -54,6 +54,52 @@ const pokerConfig = {
     ],
 }
 
+const award = () => {
+    
+}
+
+const initialMember = () => {
+    return [
+        {
+            id: 3118410422,
+            name: 'Trần Gia Thuận',
+            color: 123,
+            awards: ['initial', ],
+        },
+        {
+            id: 3118410419,
+            name: 'Hồ Thị Thơm',
+            color: 123,
+            awards: ['initial', ],
+        },
+        {
+            id: 3118410400,
+            name: 'Hồ Đức Thắng',
+            color: 123,
+            awards: ['initial', ],
+        },
+        
+        {
+            id: 3118410068,
+            name: 'Hồ Sỹ Đạt',
+            color: 123,
+            awards: ['initial', ],
+        },
+        {
+            id: 3118410412,
+            name: 'Nguyễn Ngọc Thịnh',
+            color: 123,
+            awards: ['initial', ],
+        },
+        {
+            id: 3118410420,
+            name: 'Nguyễn Thị Thu',
+            color: 123,
+            awards: ['initial', ],
+        },
+    ]
+}
+
 const getLocalStorage = (value) => {
     switch (value) {
         case 'member': return JSON.parse(localStorage.getItem('memberData')) || []
@@ -71,4 +117,4 @@ const setLocalStorage = (input, value) => {
         default: break;
     }
 }
-export { NavbarMenu, gameData, getLocalStorage, setLocalStorage, pokerConfig }
+export { award, initialMember, NavbarMenu, gameData, getLocalStorage, setLocalStorage, pokerConfig }

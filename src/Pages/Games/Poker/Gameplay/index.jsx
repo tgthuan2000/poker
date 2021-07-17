@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './index.css'
 import { PokerBody, PokerDesc, PokerHeader } from '..'
 import { Button } from '../../../../Components/Button'
 import {MemberSetPoint} from '../../../../Components/Member'
 import { Modal, ModalMessage } from '../../../../Components/Modal'
-import { getMembersCurrent, updateLocalStorage } from '../../../../Features'
+import { getMembersCurrent, setMemberFormat, updateLocalStorage } from '../../../../Features'
 
 
 const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
     const [room, setRoom] = useState(currentRoom)
     const [submitModal, setSubmitModal] = useState(false)
-    const [data, setData] = useState(room['room-members'])
+    const formatRef = useRef(getMembersCurrent(room['room-members']).map(({id}) => setMemberFormat(id)))
+    const [data, setData] = useState(formatRef.current)
     const [message, setMessage] = useState({status: false, message: ''})
-
+    
     const getValuePoint = (id, index, point) => {
         const tempData = [...data]
         tempData[index] = {id, point}
         setData(tempData)
     }
-
     const handleSubmitResult = () => {
         const tempRoom = {...room}
         tempRoom['room-rounds'].push(data)
@@ -36,8 +36,8 @@ const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
 
         setSubmitModal(false)
         // refresh data
-        setData(room['room-members'])
-    }, [room, gameId, indexRoom])
+        setData(formatRef.current)
+    }, [room, gameId, indexRoom, formatRef])
     return (
         <>
             <div className='poker-gameplay'>

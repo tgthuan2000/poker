@@ -6,9 +6,8 @@ import { Input } from '../../Components/Input'
 import { Modal, ModalInput, ModalList, ModalListItem, ModalMessage } from '../../Components/Modal'
 import { filter, search, randomString, randomNumber, getMembersId, setMemberFormat} from '../../Features'
 import PageEmpty from '../../Components/PageEmpty'
-import { gameData, getLocalStorage, initialMember, setLocalStorage } from '../../Data'
+import { gameData, getLocalStorage, setLocalStorage } from '../../Data'
 import { ModalRoom } from '../../Components/Room'
-import { InitialMember } from '../../Components/Frames'
 
 export default function Users() {
     // Khai báo state, ref, ...
@@ -53,28 +52,7 @@ export default function Users() {
     }, [memberList]);
     
     // Duyệt copyList để render view
-    // const members = useMemo(() => tempList.map((item, index) => 
-    //     <MemberOption
-    //         key={index}
-    //         name={item.name}
-    //         outline
-    //         color={item.color}
-    //         optionClick={() => {setShowModalOption(true); setValueOption(item.id)}}
-    //     />
-    // ), [tempList]);
-
-    // Custom member
-
     const members = useMemo(() => tempList.map((item, index) => 
-        item.awards[0] === 'initial' ?
-        <InitialMember key={index}>
-            <MemberOption
-                name={item.name}
-                color={item.color}
-                optionClick={() => {setShowModalOption(true); setValueOption(item.id)}}
-            />
-        </InitialMember>
-        :
         <MemberOption
             key={index}
             name={item.name}
@@ -83,6 +61,26 @@ export default function Users() {
             optionClick={() => {setShowModalOption(true); setValueOption(item.id)}}
         />
     ), [tempList]);
+
+    // Custom member
+    // const members = useMemo(() => tempList.map((item, index) => 
+    //     item.awards[0] === 'initial' ?
+    //     <InitialMember key={index}>
+    //         <MemberOption
+    //             name={item.name}
+    //             color={item.color}
+    //             optionClick={() => {setShowModalOption(true); setValueOption(item.id)}}
+    //         />
+    //     </InitialMember>
+    //     :
+    //     <MemberOption
+    //         key={index}
+    //         name={item.name}
+    //         outline
+    //         color={item.color}
+    //         optionClick={() => {setShowModalOption(true); setValueOption(item.id)}}
+    //     />
+    // ), [tempList]);
 
     // Feature tìm kiếm, lọc member
     const handleOnInput = () => {
@@ -182,7 +180,7 @@ export default function Users() {
     }, [roomData])
 
     const rooms = useMemo(() => roomLists
-        .filter(item => item['room-active'] && !item['room-members'].includes(valueOption))
+        .filter(item => item['room-active'] && !getMembersId(item['room-members']).includes(valueOption))
         .map((item, index) => 
             <ModalRoom
                 key={index}
@@ -212,7 +210,7 @@ export default function Users() {
         <>
             <div className='user'>
                     {/* Kiểm tra có hiển thị btn Add Member hay input */}
-                    <div className='user-header' style={{justifyContent:!check && members.length === 0 && 'space-between'}}>
+                    <div className='user-header'>
                         {check ?
                         <>
                             <Input
@@ -240,14 +238,14 @@ export default function Users() {
                         </>
                         :
                         <>
-                            { members.length === 0 &&
+                            {/* { members.length === 0 &&
                                 <Button
                                     onClick={() => setMemberList(initialMember)}
                                     active
                                 >
                                     Initial Members
                                 </Button>
-                            }
+                            } */}
                             <Button
                                 onClick={() => setCheck(true)}
                                 icon='fas fa-plus'
@@ -315,7 +313,7 @@ export default function Users() {
                                 }
                             }
                         > Delete </ModalListItem>
-                        <ModalListItem
+                        {/* <ModalListItem
                             colorIcon='indianred'
                             icon='far fa-address-card'
                             // onClick={}
@@ -329,7 +327,7 @@ export default function Users() {
                             colorIcon='orange'
                             icon='fas fa-pencil-alt'
                             // onClick={}
-                        > Change color </ModalListItem>
+                        > Change color </ModalListItem> */}
                     </ModalList>
                 </Modal>
             }

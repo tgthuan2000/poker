@@ -18,12 +18,6 @@ const NavbarMenu =
             icon: 'fas fa-gamepad',
             path: '/games',
         },
-        {
-            id: 4,
-            name: 'Frames',
-            icon: 'fas fa-crop-alt',
-            path: '/frames',
-        },
     ]
 
 const gameData = 
@@ -70,38 +64,32 @@ const initialMember = () => {
             id: 3118410422,
             name: 'Trần Gia Thuận',
             color: 123,
-            awards: ['initial', ],
         },
         {
             id: 3118410419,
             name: 'Hồ Thị Thơm',
             color: 123,
-            awards: ['initial', ],
         },
         {
             id: 3118410400,
             name: 'Hồ Đức Thắng',
             color: 123,
-            awards: ['initial', ],
         },
         
         {
             id: 3118410068,
             name: 'Hồ Sỹ Đạt',
             color: 123,
-            awards: ['initial', ],
         },
         {
             id: 3118410412,
             name: 'Nguyễn Ngọc Thịnh',
             color: 123,
-            awards: ['initial', ],
         },
         {
             id: 3118410420,
             name: 'Nguyễn Thị Thu',
             color: 123,
-            awards: ['initial', ],
         },
     ]
 }

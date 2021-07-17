@@ -38,7 +38,6 @@ const Gameplay = ({ gameId, currentRoom, indexRoom }) => {
         // refresh data
         setData(room['room-members'])
     }, [room, gameId, indexRoom])
-    console.log(data)
     return (
         <>
             <div className='poker-gameplay'>

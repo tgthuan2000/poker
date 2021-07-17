@@ -1,50 +1,31 @@
 import React from 'react'
 import './index.css'
 
-const Frame = ({ frame, titleFrame = frame, title, titleColor }) => {
+const Frame = ({ frame , title, url, titleColor, children }) => {
+    if(url && !frame) frame = `url(${url}) 30% round`;
     return (
-        <div className='frame'
-            style={{borderImage:frame}}
-        >
-            <div className="frame-member"></div>
-            <div className="frame-title"
-                style={{borderImage:titleFrame}}
-            >
+        <div className='frame'>
+            <div className="frame-member">
+                <div className="frame-content">
+                    {children}
+                <div className="frame-image" style={{borderImage:frame}} />
+                </div>
+            </div>
+            <div className="frame-title" >
                 <span style={{color: titleColor}}>{title}</span>
+                <div className="frame-image" style={{borderImage:frame}} />
             </div>
         </div>
     )
 }
 
-export const InitialMember = () => {
+export const InitialMember = ({children}) => {
     return (
         <Frame 
-            frame='url(./frames/rose.png) 30% round'
-            title='Initial Member'
-            titleFrame='url(./frames/rose.png) 20% round'
-            titleColor='hsl(123, 100%, 40%)'
-        />
-    )
-}
-
-export const Royal = () => {
-    return (
-        <Frame 
-            frame='url(./frames/dandelion.png) 30% round'
-            title='Royal'
-            titleFrame='url(./frames/dandelion.png) 20% round'
-            titleColor='hsl(45, 100%, 40%)'
-        />
-    )
-}
-
-export const Royal2 = () => {
-    return (
-        <Frame 
-            frame='url(./frames/dandelion2.png) 30% round'
-            title='Royal 2'
-            titleFrame='url(./frames/dandelion2.png) 20% round'
-            titleColor='hsl(65, 100%, 40%)'
-        />
+            url='/frames/dandelion2.png'
+            title='Những người dẫn đầu'
+        >
+            {children}
+        </Frame>
     )
 }

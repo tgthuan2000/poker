@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef,useMemo, useCallback } from 'react'
 import './index.css'
 import { MemberOption } from '../../Components/Member'
-import CustomMember from '../../Components/Member/custom.jsx'
 import { Button } from '../../Components/Button'
 import { Input } from '../../Components/Input'
 import { Modal, ModalInput, ModalList, ModalListItem, ModalMessage } from '../../Components/Modal'
@@ -9,6 +8,7 @@ import { filter, search, randomString, randomNumber, getMembersId, setMemberForm
 import PageEmpty from '../../Components/PageEmpty'
 import { gameData, getLocalStorage, initialMember, setLocalStorage } from '../../Data'
 import { ModalRoom } from '../../Components/Room'
+import { InitialMember } from '../../Components/Frames'
 
 export default function Users() {
     // Khai báo state, ref, ...
@@ -66,7 +66,16 @@ export default function Users() {
     // Custom member
 
     const members = useMemo(() => tempList.map((item, index) => 
-        <CustomMember
+        item.awards[0] === 'initial' ?
+        <InitialMember key={index}>
+            <MemberOption
+                name={item.name}
+                color={item.color}
+                optionClick={() => {setShowModalOption(true); setValueOption(item.id)}}
+            />
+        </InitialMember>
+        :
+        <MemberOption
             key={index}
             name={item.name}
             outline

@@ -7,6 +7,7 @@ import { Modal, ModalMessage } from '../../../../Components/Modal'
 import { Link } from 'react-router-dom'
 import { PokerBody, PokerDesc, PokerHeader } from '..'
 import { getMembersCurrent, getMembersId, setMemberFormat, updateLocalStorage } from '../../../../Features'
+import { InitialMember } from '../../../../Components/Frames'
 
 const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
     const [option, setOption] = useState(false)
@@ -75,10 +76,19 @@ const MemberConfig = ({ gameId, currentRoom, indexRoom }) => {
                 <PokerDesc>{room['room-members'].length} members</PokerDesc>
                 <div className="poker-body-wrap">
                     {useMemo(() => getMembersCurrent(room['room-members']).map((item, index) => 
+                        item.awards[0] === 'initial' ?
+                        <InitialMember key={index}>
+                            <Member
+                                name={item.name}
+                                color={item.color}
+                            />
+                        </InitialMember>
+                        :
                         <Member
                             key={index}
                             name={item.name}
                             color={item.color}
+                            outline
                         />
                         ), [room])
                     }

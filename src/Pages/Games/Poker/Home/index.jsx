@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { PokerBody, PokerDesc, PokerHeader } from '..'
 import { Button } from '../../../../Components/Button'
+import { InitialMember } from '../../../../Components/Frames'
 import { MemberShowPoint } from '../../../../Components/Member'
 import { Modal, ModalMessage } from '../../../../Components/Modal'
 import { getMembersId, mergeMembers, updateLocalStorage } from '../../../../Features'
@@ -59,6 +60,15 @@ const Home = ({ currentRoom, gameId, indexRoom }) => {
                         {useMemo(() => 
                             members.sort((a, b) => b.point - a.point)
                             .map((item, index) =>
+                                item.awards[0] === 'initial' ?
+                                <InitialMember key={index}>
+                                    <MemberShowPoint
+                                        name={item.name}
+                                        color={item.color}
+                                        point={item.point}
+                                    />
+                                </InitialMember>
+                                :
                                 <MemberShowPoint
                                     key={index}
                                     outline

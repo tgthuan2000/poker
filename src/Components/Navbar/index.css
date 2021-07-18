@@ -1,43 +1,43 @@
-.navbar{
-    position: fixed;
-    background-color: var(--primary-color);
-    top: 0;
-    left: calc(50% - var(--screen-width)/2);
-    height: 100%;
-    width: var(--navbar-width);
-    padding: 0 calc( ( var(--navbar-width) - var(--btnIcon-size) ) / 2);
-    transition: width .3s ease;
-    will-change: width;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 1;
-}
-
-.show{
-    width: var(--navbar-openSize);
-}
-
-.navbar.show + .app-wrap{
-    margin-left: var(--navbar-openSize);
-}
-
-.navbar.show .span{
-    display: block;
-}
-
-.navbar.show .btnIcon{
-    justify-content: start;
-    padding-left: 20%;
-}
-
-.navbar.show .btnIcon.bugger{
-    padding-left: 0;
-}
-.navbar-overlay{
+.navbar {
   position: fixed;
-  z-index: 1;
+  background-color: var(--primary-color);
+  top: 0;
+  left: calc(50% - var(--screen-width) / 2);
+  height: 100%;
+  width: var(--navbar-width);
+  padding: 0 calc((var(--navbar-width) - var(--btnIcon-size)) / 2);
+  transition: width 0.3s ease;
+  will-change: width;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
+}
+
+.show {
+  width: var(--navbar-openSize);
+}
+
+.navbar.show + .app-wrap {
+  margin-left: var(--navbar-openSize);
+}
+
+.navbar.show .span {
+  display: block;
+}
+
+.navbar.show .btnIcon {
+  justify-content: start;
+  padding-left: 20%;
+}
+
+.navbar.show .btnIcon.bugger {
+  padding-left: 0;
+}
+.navbar-overlay {
+  position: fixed;
+  z-index: 2;
   top: 0;
   left: 0;
   bottom: 0;

@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: flex-end;
   position: fixed;
-  z-index: 2;
+  z-index: 1;
   background: var(--secondary-color);
   width: calc(100% - var(--navbar-width));
   height: 50px;
